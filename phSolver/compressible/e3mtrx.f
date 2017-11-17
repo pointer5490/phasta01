@@ -39,12 +39,18 @@ c
 c Zdenek Johan, Summer 1990.  (Modified from e2mtrx.f)
 c Zdenek Johan, Winter 1991.  (Fortran 90)
 c Kenneth Jansen, Winter 1997 Primitive Variables
+c Joe Pointer, Fall 2017 Expand sol vector to include Tvib
+c -----> changes imposed if ipress = 3
+c   ipress = 3  : mixture of non-reacting thermally perfect gases in
+c                  thermal nonequilibrium
 c----------------------------------------------------------------------
 c
         include "common.h"
 c
 c
 c  passed arrays
+c
+c TODO: add Tvib input to function
 c
         dimension rho(npro),                 pres(npro),
      &            T(npro),                   ei(npro),
@@ -73,6 +79,12 @@ c
      &            drdp(npro),                drdT(npro)
 
 	ttim(21) = ttim(21) - secs(0.0)
+c
+c.... get property type flag
+
+	ipress = matflg(1,1)
+c
+
 c
 c.... initialize
 c
@@ -124,6 +136,14 @@ covered above       A0(:,5,1) = drdp * u1
         A0(:,5,3) = rho * u2 
         A0(:,5,4) = rho * u3 
         A0(:,5,5) = e4p
+c
+c.... *********************>  IPRESS = 3  <***********************
+c
+	if (ipress.eq.2) then
+c.... TODO: add new A0 matrix entries
+	endif
+c
+c.... ************************************************************
 c
    !      flops = flops + 67*npro
 c

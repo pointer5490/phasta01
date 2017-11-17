@@ -11,6 +11,8 @@ c   ipress = 0  : calorifically perfect gas
 c   ipress = 1  : thermally perfect gas
 c   ipress = 2  : mixture of thermally perfect gases in
 c                  thermo-chemical equilibrium
+c   ipress = 3  : mixture of non-reacting thermally perfect gases in 
+c                  thermal nonequilibrium
 c
 c  The options available are:
 c
