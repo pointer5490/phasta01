@@ -42,6 +42,7 @@ c
 c Zdenek Johan,    Spring 1990.
 c Frederic Chalot, Summer 1990.
 c Zdenek Johan,    Winter 1991.  (Fortran 90)
+c Joe Pointer,     Fall 2017. (modified for thermally perfect gas)
 c-----------------------------------------------------------------------
 c
         include "common.h"
