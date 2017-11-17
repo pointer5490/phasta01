@@ -137,7 +137,9 @@ c
          stiff(:,15,13) = rmu    * u2
          stiff(:,15,14) = rlm2mu * u3
          stiff(:,15,15) = con
-
+c
+c.... TODO: contributions of Tvib solution variable to Kij
+c
       endif
 
       if (itau .ge. 10) then     ! non-diag tau, buld compK
@@ -226,7 +228,9 @@ c
 c.... calculate compact K matrix in local parent coordinates
 c.... equation 134 in "A new ... III" only w/ K^tilde_jj. Might need
 c.... complete Kij.
-      
+c
+c.... TODO: modify compK?
+c      
          compK(:, 1) = f1 * T * rlm2mu + f3 * T * rmu
      &        + f6 * T * rmu
 c     
@@ -273,6 +277,9 @@ c.... compute diffusive fluxes and add them to ri and rmi
 
 c
 c.... diffusive flux in x1-direction
+c
+c
+c.... TODO: expand rmi matrix
 c
 c       rmi(:,1) = zero ! already initialized
         rmi(:,2) =  rlm2mu      * g1yi(:,2) 

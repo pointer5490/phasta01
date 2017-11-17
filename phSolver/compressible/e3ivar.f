@@ -93,6 +93,8 @@ c
 
         dui = zero
 c
+c.... TODO: expand dui matrix
+c
         do n = 1, nshl
            dui(:,1) = dui(:,1) + shape(:,n) * yl(:,n,1) ! p
            dui(:,2) = dui(:,2) + shape(:,n) * yl(:,n,2) ! u1
@@ -117,12 +119,16 @@ c
         endif
         
         ithm = 6
+c
+c.... TODO: update getthm
+c
         call getthm (dui(:,1),   dui(:,5),     Sclr,
      &               rk,         rho,          ei,
      &               tmp,        tmp,          tmp,
      &               tmp,        tmp,          tmp,
      &               tmp,        tmp)
 c     
+c.... TODO: update dui
 c
         dui(:,1) = rho
         dui(:,2) = rho * dui(:,2)
@@ -148,6 +154,8 @@ c
 c
 c  y(int)=SUM_{a=1}^nshl (N_a(int) Ya)
 c
+c.... TODO: update list of primitive variables
+c
           pres = pres + shape(:,n) * ycl(:,n,1)
           u1   = u1   + shape(:,n) * ycl(:,n,2)
           u2   = u2   + shape(:,n) * ycl(:,n,3)
@@ -158,7 +166,9 @@ c
        if( (iLES.gt.10).and.(iLES.lt.20))  then  ! bardina
        rlsli = zero
        do n = 1, nshl 
-
+c
+c.... TODO: confirm no update required
+c
           rlsli(:,1) = rlsli(:,1) + shape(:,n) * rlsl(:,n,1)
           rlsli(:,2) = rlsli(:,2) + shape(:,n) * rlsl(:,n,2)
           rlsli(:,3) = rlsli(:,3) + shape(:,n) * rlsl(:,n,3)
@@ -184,6 +194,8 @@ c
 c.... compute primitive variables
 c
           aci = zero
+c
+c.... TODO: update aci
 c
           do n = 1, nshl
              aci(:,1) = aci(:,1) + shape(:,n) * acl(:,n,1)
@@ -216,6 +228,9 @@ c
         endif
 
         ithm = 7
+c
+c.... TODO: update getthm (input size also?)
+c
         call getthm (pres,            T,               Sclr,
      &               rk,              rho,             ei,
      &               h,               tmp,             cv,
@@ -255,6 +270,8 @@ c.... compute the global gradient of Y-variables
 c
 c
 c  Y_{,x_i}=SUM_{a=1}^nshl (N_{a,x_i}(int) Ya)
+c
+c.... TODO: update shape function gradients (g1yi, etc.)
 c
         if(nshl.eq.4) then
           g1yi(:,1) = g1yi(:,1) + shg(:,1,1) * yl(:,1,1)
@@ -333,6 +350,9 @@ c
      &                          + shg(:,4,3) * yl(:,4,5)
 c
         else
+c
+c.... TODO: again, update g1yi, etc.
+c
         do n = 1, nshl
           g1yi(:,1) = g1yi(:,1) + shg(:,n,1) * yl(:,n,1)
           g1yi(:,2) = g1yi(:,2) + shg(:,n,1) * yl(:,n,2)
@@ -374,7 +394,9 @@ c
          if(idiff >= 1) then
             idflow = idflow + 4
             do n=1, nshl
-
+c
+c.... TODO: update divqi matrix
+c
                divqi(:,1) = divqi(:,1) + shg(:,n,1)*ql(:,n,1 ) 
      &              + shg(:,n,2)*ql(:,n,5 )
      &              + shg(:,n,3)*ql(:,n,9 )

@@ -145,6 +145,8 @@ c
 c
 c.... calculate the relevant matrices
 c
+c.... TODO: add Tvib to function input?
+c
         ttim(9) = ttim(9) - secs(0.0)
         call e3mtrx (rho,             pres,           T,
      &               ei,              h,              alfap,
@@ -213,6 +215,8 @@ c
         ttim(16) = ttim(16) + secs(0.0)
 c        
 c....  Discontinuity capturing
+c
+c.... TODO: LEFT OFF HERE W/ FINDING CHANGES....
 c
         if(iDC.ne.0) then
           call e3dc  (g1yi,          g2yi,          g3yi,

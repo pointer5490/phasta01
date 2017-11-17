@@ -139,8 +139,26 @@ covered above       A0(:,5,1) = drdp * u1
 c
 c.... *********************>  IPRESS = 3  <***********************
 c
-	if (ipress.eq.2) then
+	if (ipress.eq.3) then
 c.... TODO: add new A0 matrix entries
+c
+c.... Note: Modify existing matrix and add new entries
+c
+	A0(:,1,6) =  
+	A0(:,2,6) = 
+	A0(:,5,1) = !can use yN2 and yO2 predefined in common/input.f 
+	A0(:,5,2) =
+	A0(:,5,3) =
+	A0(:,5,4) = 
+	A0(:,5,5) =
+	A0(:,5,6) =
+	A0(:,6,1) =
+	A0(:,6,2) =
+	A0(:,6,3) =
+	A0(:,6,4) =
+	A0(:,6,5) =
+	A0(:,6,6) =
+c
 	endif
 c
 c.... ************************************************************
@@ -243,6 +261,13 @@ c
         A3(:,5,4) = e3p + rho * u3 * u3
         A3(:,5,5) = u3 * e4p
 c
+c.... *********************>  IPRESS = 3  <***********************
+c
+	if (ipress.eq.3) then
+c.... TODO: add new A1, A2, & A3 matrix entries
+	endif
+c
+c.... ************************************************************
    !      flops = flops + 35*npro
 	ttim(21) = ttim(21) + secs(0.0)
 
@@ -258,6 +283,9 @@ c.... Ref P-163 of the handout
 c
        s1 = one/(rho**2 * betaT * T)
        cv = cp - (alfap**2 * T/rho/betaT)
+c
+c.... TODO: does A0DC need to expand?
+c
        A0DC(:,1) = (rho * betaT)**2*s1
        A0DC(:,2) = -rho*alfap*rho*betaT*s1
        A0DC(:,3) = rho/T
@@ -279,6 +307,9 @@ c
        u12 = u1 * u2
        u31 = u3 * u1
        u23 = u2 * u3
+c
+c.... TODO: expand A0inv
+c
        A0inv( :,1) = e5bar*fact1
        A0inv( :,2) = c1bar*fact1
        A0inv( :,3) = c2bar*fact1
@@ -299,6 +330,9 @@ c.....calculation of dV/dY (derivative of entropy variables w.r.to primitive
 c
       fact1 = 1/T
       fact2 = fact1/T
+c
+c.... TODO: expand dVdy
+c 
       dVdY( :,1) = fact1/rho                
       dVdY( :,2) = -fact1*u1                
       dVdY( :,3) =  fact1               

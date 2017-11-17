@@ -55,6 +55,8 @@ c.... calculate (A0 y_,j) --> A0gyi
 c
 c  A0 Y_{,1}
 c
+c.... TODO: modify A0gyi
+c
         A0gyi( :,1) = A0(:,1,1)*g1yi(:,1)
      &              + A0(:,1,2)*g1yi(:,2)
      &              + A0(:,1,3)*g1yi(:,3)
@@ -139,7 +141,9 @@ c
 c
 c.... calculate (giju A0 y_,j) --> gAgyi
 c
-
+c
+c.... TODO: modify gAgyi
+c
         gAgyi( :,1) = giju(:,1)*A0gyi( :,1)
      &              + giju(:,4)*A0gyi( :,6)
      &              + giju(:,5)*A0gyi(:,11)

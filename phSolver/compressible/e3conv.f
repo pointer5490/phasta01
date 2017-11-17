@@ -73,6 +73,8 @@
 !
 !.... calculate integrated by part contribution of Euler flux (Galerkin)
 !
+!.... TODO: add 3 additional lines (6,12,18 or 16,17,18?)
+!
           ri(:, 1) = (- u1) * rho
           ri(:, 2) = (- u1) * rho * u1 - pres
           ri(:, 3) = (- u1) * rho * u2
@@ -96,6 +98,8 @@
         endif
 !
 !.... calculate ( A_i Y,i ) --> rLyi   Commented out zeros of A matrices
+!
+!.... TODO: add new A1/2/3 entries to rLyi()
 !
         rLyi(:,1) = 
      &              A1(:,1,1) * g1yi(:,1) 
@@ -180,6 +184,8 @@
 !
 !.... add contribution to rmi
 !
+!.... TODO: need to change placement of rLyi in 'rmi'
+!
         if ((ires .eq. 2) .or. (ires .eq. 3))
      &    rmi(:,16:20) = rLyi  ! modified residual uses non i.b.p form of conv.
 !
@@ -199,6 +205,8 @@
            fact3 = WdetJ * shg(:,j,3)
 !
 !.... first compute (A_i N_b,i)
+!
+!.... TODO: add new components of A1/2/3 to AiNbi
 !
            AiNbi(:,1,1) = 
      &                    fact1 * A1(:,1,1) 
@@ -313,6 +321,8 @@
 !
 !.... loop through dof's
 !
+!.... TODO: add EGmass(:,i0+6,jl).....
+!
               do jdof = 1, nflow
                  jl = j0 + jdof
                  
@@ -350,7 +360,6 @@
 !
         return
         end
-!
 !
 !
         subroutine e3convSclr (g1yti,   g2yti,   g3yti,

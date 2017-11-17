@@ -105,6 +105,9 @@ c
        if(ires.eq.1 .or. ires .eq. 3) then
 c       rLymi = rLyi
 
+c
+c.... TODO: add contribution of new A0 to rLyi
+c
         rLyi(:,1) = rLyi(:,1) 
      &            + A0(:,1,1)*aci(:,1)
 c    &            + A0(:,1,2)*aci(:,2)
@@ -146,6 +149,8 @@ c.... subtract div(q) from the least squares term
 c
       if ((idiff >= 1).and.(ires==3 .or. ires==1)) then
 c
+c.... TODO: divqi contribution to rLyi
+c
       if (isurf.eq.zero) then
          rLyi(:,2) = rLyi(:,2) - divqi(:,1)
          rLyi(:,3) = rLyi(:,3) - divqi(:,2)
@@ -155,6 +160,8 @@ c
       endif
 c
 c.... -------------------> error calculation  <-----------------
+c
+c.... TODO: changes to error calcs?
 c     
        if((ierrcalc.eq.1).and.(nitr.eq.iter)) then
           do ia=1,nshl
@@ -231,6 +238,8 @@ c
        if(ires.ne.1) then
 c
 c  A1 * Tau L(Y):  to be hit on left with Na,x in e3wmlt
+c
+c.... TODO: modify contributions to rmi
 c
         rmi(:,1) =  
      &               A1(:,1,1) * rLymi(:,1) 
@@ -347,6 +356,8 @@ c    &             + A3(:,4,3) * rLymi(:,3)
 
 c
 c  same thing for the real residual
+c
+c.... TODO: add contributions to ri
 c
        if(ires.eq.3 .or. ires .eq. 1) then  ! we need the total residual
         ri(:,1) = 
@@ -466,7 +477,8 @@ c
 c.... calculate (Atau) <-- (A_1 tau) (Recall that we are using a 
 c                                     diagonal tau here)          
 c
-          
+c.... TODO: new contributions to Atau
+c          
           if (itau.lt.10) then
 
              do i = 1, nflow
@@ -492,6 +504,8 @@ c
 c     
 c.... calculate (A_1 tau A_0) (for L.S. time term of EGmass)
 c
+c.... TODO: contributions to A1tauA0
+c
        do j = 1, nflow
           do i = 1, nflow
              A1tauA0(:,i,j) = 
@@ -504,6 +518,8 @@ c
        enddo
 c
 c.... add (A_1 tau A_1) to stiff [1,1]
+c
+c.... TODO: contributions to stiff
 c
        do j = 1, nflow
           do i = 1, nflow
@@ -549,7 +565,9 @@ c.... calculate (Atau) <-- (A_2 tau) (Recall that we are using a
 c                                     diagonal tau here)          
 c     
        if (itau.lt.10) then
-
+c
+c.... TODO: contributions to Atau
+c
           do i = 1, nflow
              Atau(:,i,1) = A2(:,i,1)*tau(:,1)
              Atau(:,i,2) = A2(:,i,2)*tau(:,2)
@@ -572,6 +590,8 @@ c
 c     
 c.... calculate (A_2 tau A_0) (for L.S. time term of EGmass)
 c
+c.... TODO: contributions to A2tauA0
+c
        do j = 1, nflow
           do i = 1, nflow
              A2tauA0(:,i,j) = 
@@ -584,6 +604,8 @@ c
        enddo
 c
 c.... add (A_2 tau A_1) to stiff [2,1]
+c
+c.... TODO: additions to stiff (why is it i+5?)
 c
        do j = 1, nflow
           do i = 1, nflow
@@ -629,7 +651,9 @@ c.... calculate (Atau) <-- (A_3 tau) (Recall that we are using a
 c                                     diagonal tau here)          
 c     
        if (itau.lt.10) then
-          
+c
+c.... TODO: attitions to Atau
+c          
           do i = 1, nflow
              Atau(:,i,1) = A3(:,i,1)*tau(:,1)
              Atau(:,i,2) = A3(:,i,2)*tau(:,2)
@@ -652,6 +676,8 @@ c
 c
 c.... calculate (A_3 tau A_0) (for L.S. time term of EGmass)
 c
+c.... TODO: additions to A3tauA0
+c
        do j = 1, nflow
           do i = 1, nflow
              A3tauA0(:,i,j) = 
@@ -664,6 +690,8 @@ c
        enddo
 c
 c.... add (A_3 tau A_1) to stiff [3,1]
+c
+c.... TODO: additions to stiff
 c
        do j = 1, nflow
           do i = 1, nflow
@@ -735,6 +763,8 @@ c
             fact = shape(:,j) * WdetJ * almi/gami/alfi*dtgl
 c
 c.... loop through d.o.f.'s
+c
+c.... TODO: additions to EGmass
 c
             do idof = 1, nflow
                il = i0 + idof

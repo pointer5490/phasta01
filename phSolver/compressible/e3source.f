@@ -44,8 +44,9 @@ c
       bcool=zero
       src=zero
 c
-
-
+c
+c.... TODO: expand 'src' to include Tvib transfer
+c
       if(matflg(5,1).eq.1) then ! usual case
          src(:,1) = zero
          src(:,2) = rho(:) * datmat(1,5,1)
@@ -123,17 +124,26 @@ c            we=3.0*29./682.
                   bcool(id)=grthOSponge*((zval-zoutSponge)**2
      &                                   +(radc-radSponge)**2)
                   bcool(id)=min(bcool(id),betamax)
+c
+c.... TODO: need to modify?
+c
 c     Determine the resulting density and energies
                den   = ytargeti(id,1) / (Rgas * ytargeti(id,5))
                ei    = ytargeti(id,5) * ( Rgas / gamma1 )
                rk    = pt5 * ( ytargeti(id,2)**2+ytargeti(id,3)**2
      &                                         +ytargeti(id,4)**2 )
+c
+c.... TODO: add Tvib as conservation variable
+c
 c     Determine the resulting conservation variables
                duitarg(id,1) = den
                duitarg(id,2) = den * ytargeti(id,2)
                duitarg(id,3) = den * ytargeti(id,3)
                duitarg(id,4) = den * ytargeti(id,4)
                duitarg(id,5) = den * (ei + rk)
+c
+c.... TODO: change to sponge
+c
 c     Apply the sponge
                if(spongeContinuity.eq.1)
      &           src(id,1) = -bcool(id)*(dui(id,1) - duitarg(id,1))
@@ -153,7 +163,9 @@ c     Apply the sponge
             stop
          endif
       endif
-      
+c
+c.... TODO: modify src
+c     
       if (isurf .eq. 1) then    ! add the surface tension force 
          src(:,2) = src(:,2) +  rho(:)*sforce(:,1)
          src(:,3) = src(:,3) +  rho(:)*sforce(:,2)
@@ -164,6 +176,9 @@ c     Apply the sponge
 
 c
 c==========================>>  IRES = 1 or 3  <<=======================
+c
+c
+c.... TODO: modify rLyi, ri, and rmi
 c
       if (ivart.gt.1) then
          rLyi(:,1) = rLyi(:,1) - src(:,1)
