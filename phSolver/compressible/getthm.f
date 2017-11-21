@@ -3,7 +3,6 @@
      &                     alfap,   betaT, gamb,    c )
 c
 c-----------------------------------------------------------------------
-c.... TODO: this is a test of git push/pull feature
 c
 c  This subroutine calculates the thermodynamic properties.
 c
