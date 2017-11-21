@@ -26,6 +26,8 @@ c  rk    (npro)         : kinetic energy
 c  u1    (npro)         : x1-velocity component
 c  u2    (npro)         : x2-velocity component
 c  u3    (npro)         : x3-velocity component
+c  eitr  (npro)         : internal energy (translational and rotational)
+c  eiv   (npro)         : internal energy (vibrational)
 c
 c output:
 c  A0    (npro,nflow,nflow)  : A0 matrix   
@@ -93,6 +95,10 @@ c
         A2 = zero
         A3 = zero
 c
+c.... *********************>  IPRESS .lt. 3  <***********************
+c 
+      if (ipress.lt.3) then
+c
 c.... set up the constants
 c
 c
@@ -139,25 +145,57 @@ covered above       A0(:,5,1) = drdp * u1
 c
 c.... *********************>  IPRESS = 3  <***********************
 c
-	if (ipress.eq.3) then
-c.... TODO: add new A0 matrix entries
+	elseif (ipress.eq.3) then
 c
-c.... Note: Modify existing matrix and add new entries
+c.... Define useful constants
 c
-	A0(:,1,6) =  
-	A0(:,2,6) = 
-	A0(:,5,1) = !can use yN2 and yO2 predefined in common/input.f 
-	A0(:,5,2) =
-	A0(:,5,3) =
-	A0(:,5,4) = 
-	A0(:,5,5) =
-	A0(:,5,6) =
-	A0(:,6,1) =
-	A0(:,6,2) =
-	A0(:,6,3) =
-	A0(:,6,4) =
-	A0(:,6,5) =
-	A0(:,6,6) =
+        drdp = rho * betaT
+        drdT = -rho * alfap
+c
+c.... Calculate A0
+c
+        A0(:,1,1) = drdp 
+c       A0(:,1,2) = zero 
+c       A0(:,1,3) = zero 
+c       A0(:,1,4) = zero 
+        A0(:,1,5) = drdT
+c       A0(:,1,6) = zero 
+c
+        A0(:,2,1) = drdp * u1 
+        A0(:,2,2) = rho 
+c       A0(:,2,3) = zero 
+c       A0(:,2,4) = zero 
+        A0(:,2,5) = drdT * u1
+c       A0(:,2,6) = zero 
+c
+        A0(:,3,1) = drdp * u2 
+c       A0(:,3,2) = zero 
+        A0(:,3,3) = rho 
+c       A0(:,3,4) = zero 
+        A0(:,3,5) = drdT * u2
+c       A0(:,3,6) = zero 
+c
+        A0(:,4,1) = drdp * u3 
+c       A0(:,4,2) = zero 
+c       A0(:,4,3) = zero 
+        A0(:,4,4) = rho 
+        A0(:,4,5) = drdT * u3
+c       A0(:,4,6) = zero 
+c
+        A0(:,5,1) = drdp * ( eitr + eiv + rk) 
+        A0(:,5,2) = rho * u1 
+        A0(:,5,3) = rho * u2 
+        A0(:,5,4) = rho * u3 
+        A0(:,5,5) = -drdT * ( eitr + eiv + rk)
+        A0(:,5,6) = rho * QTY
+c.... TODO: define QTY in getthm.f and define new name
+c
+	A0(:,6,1) = drdp * eiv
+c	A0(:,6,2) = zero
+c	A0(:,6,3) = zero
+c	A0(:,6,4) = zero
+	A0(:,6,5) = -drdT * eiv
+	A0(:,6,6) = A0(:,5,6)    !same values
 c
 	endif
 c
