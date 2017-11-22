@@ -94,21 +94,20 @@ c
         A1 = zero
         A2 = zero
         A3 = zero
-c
+cc
 c.... *********************>  IPRESS .lt. 3  <***********************
 c 
       if (ipress.lt.3) then
 c
 c.... set up the constants
 c
-c
         drdp = rho * betaT
         drdT = -rho * alfap
         A0(:,5,1) = drdp * (h + rk)  - alfap * T    ! e1p
 c        A0(:,5,1) = drdp * (ei + rk) + betaT * pres - alfap * T    ! e1p
-          e2p  = A0(:,5,1) + one
-          e3p  = rho * ( h + rk)
-          e4p  = drdT * (h + rk) + rho * cp
+        e2p  = A0(:,5,1) + one
+        e3p  = rho * ( h + rk)
+        e4p  = drdT * (h + rk) + rho * cp
 c
 c
 c.... Calculate A0
@@ -142,64 +141,6 @@ covered above       A0(:,5,1) = drdp * u1
         A0(:,5,3) = rho * u2 
         A0(:,5,4) = rho * u3 
         A0(:,5,5) = e4p
-c
-c.... *********************>  IPRESS = 3  <***********************
-c
-	elseif (ipress.eq.3) then
-c
-c.... Define useful constants
-c
-        drdp = rho * betaT
-        drdT = -rho * alfap
-c
-c.... Calculate A0
-c
-        A0(:,1,1) = drdp 
-c       A0(:,1,2) = zero 
-c       A0(:,1,3) = zero 
-c       A0(:,1,4) = zero 
-        A0(:,1,5) = drdT
-c       A0(:,1,6) = zero 
-c
-        A0(:,2,1) = drdp * u1 
-        A0(:,2,2) = rho 
-c       A0(:,2,3) = zero 
-c       A0(:,2,4) = zero 
-        A0(:,2,5) = drdT * u1
-c       A0(:,2,6) = zero 
-c
-        A0(:,3,1) = drdp * u2 
-c       A0(:,3,2) = zero 
-        A0(:,3,3) = rho 
-c       A0(:,3,4) = zero 
-        A0(:,3,5) = drdT * u2
-c       A0(:,3,6) = zero 
-c
-        A0(:,4,1) = drdp * u3 
-c       A0(:,4,2) = zero 
-c       A0(:,4,3) = zero 
-        A0(:,4,4) = rho 
-        A0(:,4,5) = drdT * u3
-c       A0(:,4,6) = zero 
-c
-        A0(:,5,1) = drdp * ( eitr + eiv + rk) 
-        A0(:,5,2) = rho * u1 
-        A0(:,5,3) = rho * u2 
-        A0(:,5,4) = rho * u3 
-        A0(:,5,5) = -drdT * ( eitr + eiv + rk)
-        A0(:,5,6) = rho * QTY
-c.... TODO: define QTY in getthm.f and define new name
-c
-	A0(:,6,1) = drdp * eiv
-c	A0(:,6,2) = zero
-c	A0(:,6,3) = zero
-c	A0(:,6,4) = zero
-	A0(:,6,5) = -drdT * eiv
-	A0(:,6,6) = A0(:,5,6)    !same values
-c
-	endif
-c
-c.... ************************************************************
 c
    !      flops = flops + 67*npro
 c
@@ -299,13 +240,197 @@ c
         A3(:,5,4) = e3p + rho * u3 * u3
         A3(:,5,5) = u3 * e4p
 c
+c       !endif ipress.lt.3
 c.... *********************>  IPRESS = 3  <***********************
 c
-	if (ipress.eq.3) then
-c.... TODO: add new A1, A2, & A3 matrix entries
-	endif
+	elseif (ipress.eq.3) then
 c
+c.... Define useful constants
+c
+        drdp = rho * betaT
+        drdT = -rho * alfap
+c
+c.... Calculate A0
+c
+        A0(:,1,1) = drdp 
+c       A0(:,1,2) = zero 
+c       A0(:,1,3) = zero 
+c       A0(:,1,4) = zero 
+        A0(:,1,5) = drdT
+c       A0(:,1,6) = zero 
+c
+        A0(:,2,1) = drdp * u1 
+        A0(:,2,2) = rho 
+c       A0(:,2,3) = zero 
+c       A0(:,2,4) = zero 
+        A0(:,2,5) = drdT * u1
+c       A0(:,2,6) = zero 
+c
+        A0(:,3,1) = drdp * u2 
+c       A0(:,3,2) = zero 
+        A0(:,3,3) = rho 
+c       A0(:,3,4) = zero 
+        A0(:,3,5) = drdT * u2
+c       A0(:,3,6) = zero 
+c
+        A0(:,4,1) = drdp * u3 
+c       A0(:,4,2) = zero 
+c       A0(:,4,3) = zero 
+        A0(:,4,4) = rho 
+        A0(:,4,5) = drdT * u3
+c       A0(:,4,6) = zero 
+c
+        A0(:,5,1) = drdp * ( eitr + eiv + rk) 
+        A0(:,5,2) = rho * u1 
+        A0(:,5,3) = rho * u2 
+        A0(:,5,4) = rho * u3 
+        A0(:,5,5) = drdT * ( eitr + eiv + rk)
+        A0(:,5,6) = rho * QTY
+c.... TODO: define QTY in getthm.f and define new name
+c
+	A0(:,6,1) = drdp * eiv
+c	A0(:,6,2) = zero
+c	A0(:,6,3) = zero
+c	A0(:,6,4) = zero
+	A0(:,6,5) = drdT * eiv
+	A0(:,6,6) = A0(:,5,6)    !same values
+c
+c.... Calculate A-tilde-1, A-tilde-2 and A-tilde-3
+c
+        A1(:,1,1) = drdp * u1
+        A1(:,1,2) = rho
+c       A1(:,1,3) = zero
+c       A1(:,1,4) = zero
+        A1(:,1,5) = drdT * u1
+	A1(:,1,6) = zero
+c
+        A1(:,2,1) = drdp * u1 * u1 +1
+        A1(:,2,2) = two *rho  * u1
+c       A1(:,2,3) = zero
+c       A1(:,2,4) = zero
+        A1(:,2,5) = drdT * u1 * u1
+	A1(:,2,6) = 
+c
+        A1(:,3,1) = drdp * u1 * u2 
+        A1(:,3,2) = rho  * u2
+        A1(:,3,3) = rho  * u1
+c       A1(:,3,4) = zero
+        A1(:,3,5) = drdT * u1 * u2
+	A1(:,3,6) = 
+c
+        A1(:,4,1) = drdp * u1 * u3 
+        A1(:,4,2) = rho  * u3
+c       A1(:,4,3) = zero
+        A1(:,4,4) = rho  * u1
+        A1(:,4,5) = drdT * u1 * u3
+	A1(:,4,6) = 
+c
+        A1(:,5,1) = 
+        A1(:,5,2) = 
+        A1(:,5,3) = 
+        A1(:,5,4) =  
+        A1(:,5,5) = 
+	A1(:,5,6) = 
+c
+	A1(:,6,1) = 
+        A1(:,6,2) = 
+        A1(:,6,3) = 
+        A1(:,6,4) =  
+        A1(:,6,5) = 
+	A1(:,6,6) = 
+c	
+   !      flops = flops + 35*npro
+c
+        A2(:,1,1) = drdp * u2
+c       A2(:,1,2) = zero
+        A2(:,1,3) = rho
+c       A2(:,1,4) = zero
+        A2(:,1,5) = drdT * u2
+	A2(:,1,6) = 
+c
+        A2(:,2,1) = drdp * u1 * u2 
+        A2(:,2,2) = rho  * u2
+        A2(:,2,3) = rho  * u1
+c       A2(:,2,4) = zero
+        A2(:,2,5) = drdT * u1 * u2
+	A2(:,2,6) = 
+c
+        A2(:,3,1) = drdp * u2 * u2 +1
+c       A2(:,3,2) = zero
+        A2(:,3,3) = two * rho  * u2
+c       A2(:,3,4) = zero
+        A2(:,3,5) = drdT * u2 * u2
+	A2(:,3,6) = 
+c
+        A2(:,4,1) = drdp * u2 * u3 
+c       A2(:,4,2) = zero
+        A2(:,4,3) = rho  * u3
+        A2(:,4,4) = rho  * u2
+        A2(:,4,5) = drdT * u2 * u3
+	A2(:,4,5) = 
+c
+        A2(:,5,1) = 
+        A2(:,5,2) = 
+        A2(:,5,3) = 
+        A2(:,5,4) = 
+        A2(:,5,5) = 
+	A2(:,5,6) = 
+c
+	A2(:,6,1) = 
+        A2(:,6,2) = 
+        A2(:,6,3) = 
+        A2(:,6,4) = 
+        A2(:,6,5) = 
+	A2(:,6,6) = 
+c	
+   !      flops = flops + 35*npro
+c
+        A3(:,1,1) = drdp * u3
+c       A3(:,1,2) = zero
+c       A3(:,1,3) = zero
+        A3(:,1,4) = rho
+        A3(:,1,5) = drdT * u3
+	A3(:,1,6) = 
+c
+        A3(:,2,1) = drdp * u1 * u3 
+        A3(:,2,2) = rho  * u3
+c       A3(:,2,3) = zero
+        A3(:,2,4) = rho  * u1
+        A3(:,2,5) = drdT * u1 * u3
+	A3(:,2,6) = 
+c
+        A3(:,3,1) = drdp * u3 * u2 
+c       A3(:,3,2) = zero
+        A3(:,3,3) = rho  * u3
+        A3(:,3,4) = rho  * u2
+        A3(:,3,5) = drdT * u3 * u2
+	A3(:,3,6) = 
+c
+        A3(:,4,1) = drdp * u3 * u3 +1
+c       A3(:,4,2) = zero
+c       A3(:,4,3) = zero
+        A3(:,4,4) = two *rho  * u3
+        A3(:,4,5) = drdT * u3 * u3
+	A3(:,4,6) = 
+c
+        A3(:,5,1) = 
+        A3(:,5,2) = 
+        A3(:,5,3) = 
+        A3(:,5,4) = 
+        A3(:,5,5) = 
+	A3(:,5,6) = 
+c
+        A3(:,6,1) = 
+        A3(:,6,2) = 
+        A3(:,6,3) = 
+        A3(:,6,4) = 
+        A3(:,6,5) = 
+	A3(:,6,6) = 
+c.... TODO: add new A1, A2, & A3 matrix entries
+c
+	endif
 c.... ************************************************************
+c
    !      flops = flops + 35*npro
 	ttim(21) = ttim(21) + secs(0.0)
 
