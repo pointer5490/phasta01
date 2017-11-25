@@ -93,7 +93,9 @@ c
 
         dui = zero
 c
-c.... TODO: expand dui matrix
+c.... get the property type flag
+c
+	ipress = matflg(1,1)
 c
         do n = 1, nshl
            dui(:,1) = dui(:,1) + shape(:,n) * yl(:,n,1) ! p
@@ -101,6 +103,9 @@ c
            dui(:,3) = dui(:,3) + shape(:,n) * yl(:,n,3) ! u2
            dui(:,4) = dui(:,4) + shape(:,n) * yl(:,n,4) ! u3
            dui(:,5) = dui(:,5) + shape(:,n) * yl(:,n,5) ! T
+	if (ipress.eq.3) then            
+           dui(:,6) = dui(:,6) + shape(:,n) * yl(:,n,6) ! Tvib
+	endif
         enddo
 c     
 !      flops = flops + 10*nshl*npro

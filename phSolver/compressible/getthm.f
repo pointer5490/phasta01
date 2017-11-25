@@ -1,6 +1,7 @@
         subroutine getthm (pres,    T,     Sclr,    rk,   rho,
      &                     ei,      h,     s,       cv,  cp,
-     &                     alfap,   betaT, gamb,    c )
+     &                     alfap,   betaT, gamb,    c ,  eitr,
+     &                     eiv,     eiqt)
 c
 c-----------------------------------------------------------------------
 c
@@ -39,6 +40,9 @@ c  alfap  (npro)        : expansivity
 c  betaT  (npro)        : isothermal compressibility
 c  gamb   (npro)        : gamma-bar (defined in paper by Chalot et al.)
 c  c      (npro)        : speed of sound
+c  eitr   (npro)	: internal energy (translation and rotation)
+c  eiv    (npro)	: internal energy (vibration)
+c  eiqt   (npro)	: internal energy quantity
 c
 c
 c Zdenek Johan,    Spring 1990.
