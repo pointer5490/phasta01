@@ -1,7 +1,7 @@
         subroutine getthm (pres,    T,     Sclr,    rk,   rho,
      &                     ei,      h,     s,       cv,  cp,
      &                     alfap,   betaT, gamb,    c ,  eitr,
-     &                     eiv,     eiqt)
+     &                     eiv,     eiqt,  Tv,      eiqt)
 c
 c-----------------------------------------------------------------------
 c
@@ -12,8 +12,8 @@ c   ipress = 0  : calorifically perfect gas
 c   ipress = 1  : thermally perfect gas
 c   ipress = 2  : mixture of thermally perfect gases in
 c                  thermo-chemical equilibrium
-c   ipress = 3  : mixture of non-reacting thermally perfect gases in 
-c                  thermal nonequilibrium
+c   ipress = 3  : mixture of thermally perfect gases in thermal 
+c                  non-equilibrium
 c
 c  The options available are:
 c
@@ -43,6 +43,7 @@ c  c      (npro)        : speed of sound
 c  eitr   (npro)	: internal energy (translation and rotation)
 c  eiv    (npro)	: internal energy (vibration)
 c  eiqt   (npro)	: internal energy quantity
+c  Tv     (npro)        : vibrational temperature
 c
 c
 c Zdenek Johan,    Spring 1990.
@@ -61,9 +62,13 @@ c
      &            alfap(npro),               betaT(npro),
      &            gamb(npro),                c(npro),
      &            rsrhol(npro),              rsrhog(npro),
-     &            tmpg(npro),                tmpl(npro)             
+     &            tmpg(npro),                tmpl(npro),
+     &            eitr(npro),                eiv(npro),
+     &            eiqt(npro),                Tv(npro)             
 c
-        dimension Texp1(npro),               Texp2(npro)
+        dimension Texp1(npro),               Texp2(npro),
+                  yRT1(npro),                yRT2(npro)
+c
         real*8 prop_blend(npro),test_it(npro)
 
 c       ttim(27) = ttim(27) - secs(0.0)
@@ -334,11 +339,59 @@ c
 c
         endif
 c
+	endif	!end (ipress.eq.1)
 c
-c.... end of ipress = 1
+c....****************** If (ipress.eq.3) *********************
 c
-        endif
+	if (ipress.eq.3) then
+c	
+		if (ithm .ge. 7) then
+c
+c.... define useful constants
+c
+		Texp1 = exp( Tvib(1)/Tv )
+		Texp2 = exp( Tvib(2)/Tv )
+		yRT1 = yN2*Rs(1)*Tvib(1)
+		yRT2 = yO2*Rs(2)*Tvib(2)
+                eiqt = ( one / Tv**2 ) * (
+    &                yRT1*Tvib(1)*Texp1 / ( Texp1 - one )**2
+    &              + yRT2*Tvib(2)*Texp2 / ( Texp2 - one )**2 )
+c
+c.... internal energy (translation and rotation)
+c
+		eitr = (five / two) * T * (yN2*Rs(1) + yO2*Rs(2))
+c
+c.... internal energy (vibration)
+c
+		eiv = yRT1 / ( Texp1 - one )
+    &               + yRT2 / ( Texp2 - one )
+c
+c.... define internal energy, enthalpy, alfaP, betaT, cp, gamb, c
+c
+		ei    = eitr + eiv
+		h     = ei + Rgas * T
+		alfap = one / T
+		betaT = one / pres
+		cp    =
+		cv    = cp - Rgas
+		gamb  = Rgas / cv
+		c     = sqrt( cp * gamb * T )
+  
 
+
+
+
+
+
+
+
+
+
+
+		endif	!endif for ithm
+	endif	!endif for ipress
+c
+c
 c       ttim(27) = ttim(27) + secs(0.0)
 c
 c.... end

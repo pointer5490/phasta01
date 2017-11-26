@@ -43,10 +43,8 @@ c
 c Zdenek Johan, Summer 1990.  (Modified from e2mtrx.f)
 c Zdenek Johan, Winter 1991.  (Fortran 90)
 c Kenneth Jansen, Winter 1997 Primitive Variables
-c Joe Pointer, Fall 2017 Expand sol vector to include Tvib
-c -----> changes imposed if ipress = 3
-c   ipress = 3  : mixture of non-reacting thermally perfect gases in
-c                  thermal nonequilibrium
+c Joe Pointer, Fall 2017 Expand sol vector to included Tvib
+c ----->mixture of non-reacting perfect gases in thermal non-equilibrium
 c----------------------------------------------------------------------
 c
         include "common.h"
@@ -85,11 +83,6 @@ c
 
 	ttim(21) = ttim(21) - secs(0.0)
 c
-c.... get property type flag
-
-	ipress = matflg(1,1)
-c
-
 c
 c.... initialize
 c
@@ -97,156 +90,7 @@ c
         A1 = zero
         A2 = zero
         A3 = zero
-cc
-c.... *********************>  IPRESS .lt. 3  <***********************
-c 
-      if (ipress.lt.3) then
 c
-c.... set up the constants
-c
-        drdp = rho * betaT
-        drdT = -rho * alfap
-        A0(:,5,1) = drdp * (h + rk)  - alfap * T    ! e1p
-c        A0(:,5,1) = drdp * (ei + rk) + betaT * pres - alfap * T    ! e1p
-        e2p  = A0(:,5,1) + one
-        e3p  = rho * ( h + rk)
-        e4p  = drdT * (h + rk) + rho * cp
-c
-c
-c.... Calculate A0
-c
-        A0(:,1,1) = drdp 
-c       A0(:,1,2) = zero 
-c       A0(:,1,3) = zero 
-c       A0(:,1,4) = zero 
-        A0(:,1,5) = drdT 
-c
-        A0(:,2,1) = drdp * u1 
-        A0(:,2,2) = rho 
-c       A0(:,2,3) = zero 
-c       A0(:,2,4) = zero 
-        A0(:,2,5) = drdT * u1 
-c
-        A0(:,3,1) = drdp * u2 
-c       A0(:,3,2) = zero 
-        A0(:,3,3) = rho 
-c       A0(:,3,4) = zero 
-        A0(:,3,5) = drdT * u2 
-c
-        A0(:,4,1) = drdp * u3 
-c       A0(:,4,2) = zero 
-c       A0(:,4,3) = zero 
-        A0(:,4,4) = rho 
-        A0(:,4,5) = drdT * u3 
-c
-covered above       A0(:,5,1) = drdp * u1 
-        A0(:,5,2) = rho * u1 
-        A0(:,5,3) = rho * u2 
-        A0(:,5,4) = rho * u3 
-        A0(:,5,5) = e4p
-c
-   !      flops = flops + 67*npro
-c
-c.... Calculate A-tilde-1, A-tilde-2 and A-tilde-3
-c
-        A1(:,1,1) = drdp * u1
-        A1(:,1,2) = rho
-c       A1(:,1,3) = zero
-c       A1(:,1,4) = zero
-        A1(:,1,5) = drdT * u1
-c
-        A1(:,2,1) = drdp * u1 * u1 +1
-        A1(:,2,2) = two *rho  * u1
-c       A1(:,2,3) = zero
-c       A1(:,2,4) = zero
-        A1(:,2,5) = drdT * u1 * u1
-c
-        A1(:,3,1) = drdp * u1 * u2 
-        A1(:,3,2) = rho  * u2
-        A1(:,3,3) = rho  * u1
-c       A1(:,3,4) = zero
-        A1(:,3,5) = drdT * u1 * u2
-c
-        A1(:,4,1) = drdp * u1 * u3 
-        A1(:,4,2) = rho  * u3
-c       A1(:,4,3) = zero
-        A1(:,4,4) = rho  * u1
-        A1(:,4,5) = drdT * u1 * u3
-c
-        A1(:,5,1) = u1 * e2p
-        A1(:,5,2) = e3p + rho * u1 * u1
-        A1(:,5,3) = rho * u1 * u2
-        A1(:,5,4) = rho * u1 * u3
-        A1(:,5,5) = u1 * e4p
-c
-   !      flops = flops + 35*npro
-c
-        A2(:,1,1) = drdp * u2
-c       A2(:,1,2) = zero
-        A2(:,1,3) = rho
-c       A2(:,1,4) = zero
-        A2(:,1,5) = drdT * u2
-c
-        A2(:,2,1) = drdp * u1 * u2 
-        A2(:,2,2) = rho  * u2
-        A2(:,2,3) = rho  * u1
-c       A2(:,2,4) = zero
-        A2(:,2,5) = drdT * u1 * u2
-c
-        A2(:,3,1) = drdp * u2 * u2 +1
-c       A2(:,3,2) = zero
-        A2(:,3,3) = two * rho  * u2
-c       A2(:,3,4) = zero
-        A2(:,3,5) = drdT * u2 * u2
-c
-        A2(:,4,1) = drdp * u2 * u3 
-c       A2(:,4,2) = zero
-        A2(:,4,3) = rho  * u3
-        A2(:,4,4) = rho  * u2
-        A2(:,4,5) = drdT * u2 * u3
-c
-        A2(:,5,1) = u2 * e2p
-        A2(:,5,2) = rho * u1 * u2
-        A2(:,5,3) = e3p + rho * u2 * u2
-        A2(:,5,4) = rho * u2 * u3
-        A2(:,5,5) = u2 * e4p
-c
-   !      flops = flops + 35*npro
-c
-        A3(:,1,1) = drdp * u3
-c       A3(:,1,2) = zero
-c       A3(:,1,3) = zero
-        A3(:,1,4) = rho
-        A3(:,1,5) = drdT * u3
-c
-        A3(:,2,1) = drdp * u1 * u3 
-        A3(:,2,2) = rho  * u3
-c       A3(:,2,3) = zero
-        A3(:,2,4) = rho  * u1
-        A3(:,2,5) = drdT * u1 * u3
-c
-        A3(:,3,1) = drdp * u3 * u2 
-c       A3(:,3,2) = zero
-        A3(:,3,3) = rho  * u3
-        A3(:,3,4) = rho  * u2
-        A3(:,3,5) = drdT * u3 * u2
-c
-        A3(:,4,1) = drdp * u3 * u3 +1
-c       A3(:,4,2) = zero
-c       A3(:,4,3) = zero
-        A3(:,4,4) = two *rho  * u3
-        A3(:,4,5) = drdT * u3 * u3
-c
-        A3(:,5,1) = u3 * e2p
-        A3(:,5,2) = rho * u1 * u3
-        A3(:,5,3) = rho * u2 * u3
-        A3(:,5,4) = e3p + rho * u3 * u3
-        A3(:,5,5) = u3 * e4p
-c
-c       !endif ipress.lt.3
-c.... *********************>  IPRESS = 3  <***********************
-c
-	elseif (ipress.eq.3) then
 c
 c.... Define useful constants
 c
@@ -432,8 +276,6 @@ c
         A3(:,6,5) = drdT * u3 * eiv
 	A3(:,6,6) = A3(:,5,6)		!same value
 c
-	endif
-c.... ************************************************************
 c
    !      flops = flops + 35*npro
 	ttim(21) = ttim(21) + secs(0.0)
