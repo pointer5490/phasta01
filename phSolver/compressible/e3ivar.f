@@ -140,8 +140,10 @@ c
         dui(:,3) = rho * dui(:,3)
         dui(:,4) = rho * dui(:,4)
         dui(:,5) = rho * (ei + rk)
-        
-          
+	if (ipress.eq.3) then
+        dui(:,6) = 
+        endif
+c  
        ttim(10) = ttim(10) + secs(0.0)
 c
 c.... ------------->  Primitive variables at int. point  <--------------
@@ -155,6 +157,8 @@ c
        u2   = zero
        u3   = zero
        T    = zero
+       Tv   = zero
+c
        do n = 1, nshl 
 c
 c  y(int)=SUM_{a=1}^nshl (N_a(int) Ya)
@@ -165,7 +169,10 @@ c
           u1   = u1   + shape(:,n) * ycl(:,n,2)
           u2   = u2   + shape(:,n) * ycl(:,n,3)
           u3   = u3   + shape(:,n) * ycl(:,n,4)
-          T    = T    + shape(:,n) * ycl(:,n,5)          
+          T    = T    + shape(:,n) * ycl(:,n,5)
+	  if (ipress.eq.3) then 
+          Tv   = Tv   + shape(:,n) * ycl(:,n,5)          
+          endif
        enddo
 
        if( (iLES.gt.10).and.(iLES.lt.20))  then  ! bardina
@@ -179,8 +186,7 @@ c
           rlsli(:,3) = rlsli(:,3) + shape(:,n) * rlsl(:,n,3)
           rlsli(:,4) = rlsli(:,4) + shape(:,n) * rlsl(:,n,4)
           rlsli(:,5) = rlsli(:,5) + shape(:,n) * rlsl(:,n,5)
-          rlsli(:,6) = rlsli(:,6) + shape(:,n) * rlsl(:,n,6)
-
+	  rlsli(:,6) = rlsli(:,6) + shape(:,n) * rlsl(:,n,6)
        enddo
        else
           rlsli = zero
@@ -208,6 +214,9 @@ c
              aci(:,3) = aci(:,3) + shape(:,n) * acl(:,n,3)
              aci(:,4) = aci(:,4) + shape(:,n) * acl(:,n,4)
              aci(:,5) = aci(:,5) + shape(:,n) * acl(:,n,5)
+	     if (ipress.eq.3) then
+             aci(:,6) = aci(:,6) + shape(:,n) * acl(:,n,6)
+	     endif
           enddo
 c
 !      flops = flops + 10*nshl*npro

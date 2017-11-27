@@ -344,7 +344,14 @@ c
 c....****************** If (ipress.eq.3) *********************
 c
 	if (ipress.eq.3) then
+c
+c
+ 	if (iLSet .eq. 0)then 
+c        
+	rho  = pres / ( Rgas * T )
 c	
+	endif	!endif for iLSet
+c  			
 		if (ithm .ge. 7) then
 c
 c.... define useful constants
@@ -376,18 +383,7 @@ c
 		cv    = cp - Rgas
 		gamb  = Rgas / cv
 		c     = sqrt( cp * gamb * T )
-  
-
-
-
-
-
-
-
-
-
-
-
+c
 		endif	!endif for ithm
 	endif	!endif for ipress
 c
