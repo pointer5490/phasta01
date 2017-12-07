@@ -175,7 +175,8 @@ c
      &               ei,              rk,              u1,
      &               u2,              u3,              rLyi,
      &               ri,              rmi,             EGmass,
-     &               shg,             shape,           WdetJ)
+     &               shg,             shape,           WdetJ,
+     &               eiv)
         ttim(14) = ttim(14) + secs(0.0)
 c
 c.... calculate the diffusion contribution

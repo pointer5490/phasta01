@@ -70,13 +70,14 @@ c
 c.... calculate the integration variables necessary for the
 c     formation of q
 c
-
+c.... TODO: determine additional changes in this file
+c
         call e3qvar   (ycl,       shape,        shdrv,   
      &                 rho,       xl,           g1yi,
      &                 g2yi,      g3yi,         shg,
      &                 dxidx,     WdetJ,        T,
      &                 cp,        u1,           u2,
-     &                 u3                                 )              
+     &                 u3)              
 c
 c
 c.... compute diffusive flux vector at this integration point

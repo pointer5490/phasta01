@@ -28,7 +28,7 @@ c  u1    (npro)         : x1-velocity component
 c  u2    (npro)         : x2-velocity component
 c  u3    (npro)         : x3-velocity component
 c  eitr  (npro)         : internal energy (translational and rotational)
-c  eiv   (npro)         : internal energy (vibrational)
+c  eiv   (npro)         : internal energy (vibration)
 c  eiqt  (npro)		: internal energy constant
 c  Tv    (npro)         : vibrational temperature
 c
@@ -152,28 +152,28 @@ c
 c       A1(:,1,3) = zero
 c       A1(:,1,4) = zero
         A1(:,1,5) = drdT * u1
-	A1(:,1,6) = zero
+c	A1(:,1,6) = zero
 c
         A1(:,2,1) = drdp * u1 * u1 +1
         A1(:,2,2) = two *rho  * u1
 c       A1(:,2,3) = zero
 c       A1(:,2,4) = zero
         A1(:,2,5) = drdT * u1 * u1
-	A1(:,2,6) = zero
+c	A1(:,2,6) = zero
 c
         A1(:,3,1) = drdp * u1 * u2 
         A1(:,3,2) = rho  * u2
         A1(:,3,3) = rho  * u1
 c       A1(:,3,4) = zero
         A1(:,3,5) = drdT * u1 * u2
-	A1(:,3,6) = zero
+c	A1(:,3,6) = zero
 c
         A1(:,4,1) = drdp * u1 * u3 
         A1(:,4,2) = rho  * u3
 c       A1(:,4,3) = zero
         A1(:,4,4) = rho  * u1
         A1(:,4,5) = drdT * u1 * u3
-	A1(:,4,6) = zero
+c	A1(:,4,6) = zero
 c
         A1(:,5,1) = u1 * e4p
         A1(:,5,2) = drdp * ( e3p + u1*u1 ) + pres
@@ -184,8 +184,8 @@ c
 c
 	A1(:,6,1) = drdp * u1 * eiv
         A1(:,6,2) = rho * eiv
-        A1(:,6,3) = zero
-        A1(:,6,4) = zero 
+c       A1(:,6,3) = zero
+c       A1(:,6,4) = zero 
         A1(:,6,5) = drdT * u1 * eiv
 	A1(:,6,6) = A1(:,5,6)		!same value
 c	
@@ -196,28 +196,28 @@ c       A2(:,1,2) = zero
         A2(:,1,3) = rho
 c       A2(:,1,4) = zero
         A2(:,1,5) = drdT * u2
-	A2(:,1,6) = zero
+c	A2(:,1,6) = zero
 c
         A2(:,2,1) = drdp * u1 * u2 
         A2(:,2,2) = rho  * u2
         A2(:,2,3) = rho  * u1
 c       A2(:,2,4) = zero
         A2(:,2,5) = drdT * u1 * u2
-	A2(:,2,6) = zero
+c	A2(:,2,6) = zero
 c
         A2(:,3,1) = drdp * u2 * u2 +1
 c       A2(:,3,2) = zero
         A2(:,3,3) = two * rho  * u2
 c       A2(:,3,4) = zero
         A2(:,3,5) = drdT * u2 * u2
-	A2(:,3,6) = zero
+c	A2(:,3,6) = zero
 c
         A2(:,4,1) = drdp * u2 * u3 
 c       A2(:,4,2) = zero
         A2(:,4,3) = rho  * u3
         A2(:,4,4) = rho  * u2
         A2(:,4,5) = drdT * u2 * u3
-	A2(:,4,5) = zero
+c	A2(:,4,6) = zero
 c
         A2(:,5,1) = u2 * e4p
         A2(:,5,2) = drdp * u2 * u1
@@ -227,9 +227,9 @@ c
 	A2(:,5,6) = rho * u2 * eiqt
 c
 	A2(:,6,1) = drdp * u2 * eiv
-        A2(:,6,2) = zero
+c       A2(:,6,2) = zero
         A2(:,6,3) = rho * eiv
-        A2(:,6,4) = zero
+c       A2(:,6,4) = zero
         A2(:,6,5) = drdT * u2 * eiv
 	A2(:,6,6) = A2(:,5,6)		!same value
 c	
@@ -240,28 +240,28 @@ c       A3(:,1,2) = zero
 c       A3(:,1,3) = zero
         A3(:,1,4) = rho
         A3(:,1,5) = drdT * u3
-	A3(:,1,6) = zero
+c	A3(:,1,6) = zero
 c
         A3(:,2,1) = drdp * u1 * u3 
         A3(:,2,2) = rho  * u3
 c       A3(:,2,3) = zero
         A3(:,2,4) = rho  * u1
         A3(:,2,5) = drdT * u1 * u3
-	A3(:,2,6) = zero
+c	A3(:,2,6) = zero
 c
         A3(:,3,1) = drdp * u3 * u2 
 c       A3(:,3,2) = zero
         A3(:,3,3) = rho  * u3
         A3(:,3,4) = rho  * u2
         A3(:,3,5) = drdT * u3 * u2
-	A3(:,3,6) = zero
+c	A3(:,3,6) = zero
 c
         A3(:,4,1) = drdp * u3 * u3 +1
 c       A3(:,4,2) = zero
 c       A3(:,4,3) = zero
         A3(:,4,4) = two *rho  * u3
         A3(:,4,5) = drdT * u3 * u3
-	A3(:,4,6) = zero
+c	A3(:,4,6) = zero
 c
         A3(:,5,1) = u3 * e4p
         A3(:,5,2) = drdp * u3 * u1
@@ -271,8 +271,8 @@ c
 	A3(:,5,6) = rho * u3 * eiqt
 c
         A3(:,6,1) = drdp * u3 * eiv
-        A3(:,6,2) = zero
-        A3(:,6,3) = zero
+c       A3(:,6,2) = zero
+c       A3(:,6,3) = zero
         A3(:,6,4) = rho * eiv
         A3(:,6,5) = drdT * u3 * eiv
 	A3(:,6,6) = A3(:,5,6)		!same value

@@ -29,7 +29,7 @@ c output:
 c  ri     (npro,nflow*(nsd+1)) : partial residual
 c  rmi    (npro,nflow*(nsd+1)) : partial modified residual
 c  stiff  (npro,nsd*nflow,nsd*nflow) : stiffness matrix
-c  compK (npro,10)             : K_ij in (eq.134) A new ... III 
+c  compK  (npro,10)             : K_ij in (eq.134) A new ... III 
 c
 c
 c Zdenek Johan, Summer 1990. (Modified from e2visc.f)
@@ -67,8 +67,6 @@ c
 c.... --------------------->  Diffusivity Matrix  <-------------------
 c
 c
-c.... TODO: contributions of Tvib solution variable to Kij
-c
       if (lhs .eq. 1) then
 c
 c.... K11
@@ -103,17 +101,17 @@ c
          stiff(:, 8, 3) = rmu
          stiff(:, 9, 2) = rlm
          stiff(:,11, 2) = rlm    * u2
-         stiff(:,11, 3) = rmu    * u1
+         stiff(:,11, 3) = rmu    * u1S
            
 c     
 c.... K22
 c     
          stiff(:, 8, 8) = rmu
          stiff(:, 9, 9) = rlm2mu
-         stiff(:, 10, 10) = rmu
+         stiff(:,10,10) = rmu
          stiff(:,11, 8) = rmu    * u1
          stiff(:,11, 9) = rlm2mu * u2
-         stiff(:,11, 10) = rmu    * u3
+         stiff(:,11,10) = rmu    * u3
          stiff(:,11,11) = con
          stiff(:,11,12) = convib
          stiff(:,12,12) = convib
@@ -121,7 +119,7 @@ c
 c.... K23
 c     
          stiff(:, 9,16) = rlm
-         stiff(:, 10,15) = rmu
+         stiff(:,10,15) = rmu
          stiff(:,11,15) = rmu    * u3
          stiff(:,11,16) = rlm    * u2
 c     
@@ -134,10 +132,10 @@ c
 c     
 c.... K32
 c     
-         stiff(:,15, 10) = rmu
+         stiff(:,15,10) = rmu
          stiff(:,16, 9) = rlm
          stiff(:,17, 9) = rlm    * u3
-         stiff(:,17, 10) = rmu    * u2
+         stiff(:,17,10) = rmu    * u2
 c     
 c.... K33
 c     
@@ -240,7 +238,7 @@ c.... calculate compact K matrix in local parent coordinates
 c.... equation 134 in "A new ... III" only w/ K^tilde_jj. Might need
 c.... complete Kij.
 c
-c.... TODO: modify compK?
+c.... TODO: modify compK for viscous flow?
 c      
          compK(:, 1) = f1 * T * rlm2mu + f3 * T * rmu
      &        + f6 * T * rmu
@@ -289,8 +287,7 @@ c.... compute diffusive fluxes and add them to ri and rmi
 c
 c.... diffusive flux in x1-direction
 c
-c
-c.... TODO: expand rmi matrix
+c.... TODO: determine changes to rlsli
 c
 c       rmi(:,1) = zero ! already initialized
         rmi(:,2) =  rlm2mu      * g1yi(:,2) 
@@ -308,57 +305,67 @@ c       rmi(:,1) = zero ! already initialized
      &               + rmu * u2 * g2yi(:,2) + rlm * u1 * g2yi(:,3)
      &               + rmu * u3 * g3yi(:,2) + rlm * u1 * g3yi(:,4)
      &               + con      * g1yi(:,5)
-
+     &               + convib   * g1yi(:,6)
+	rmi(:,6) =  convib      * g1yi(:,6)
 c
-      ri (:,2:5) = ri (:,2:5) + rmi(:,2:5)
-c     rmi(:,2:5) = rmi(:,2:5) + qdi(:,2:5)
+      ri (:,2:6) = ri (:,2:6) + rmi(:,2:6)
+c
+c!... Need to change qdi dimension if uncommenting line below
+c!     rmi(:,2:6) = rmi(:,2:6) + qdi(:,2:5)
 c
 c!      flops = flops + 74*npro
 c
 c.... diffusive flux in x2-direction
 c
-c       rmi(:, 6) = zero
-        rmi(:, 7) =       rmu * g1yi(:,3) 
+c       rmi(:, 7) = zero
+        rmi(:, 8) =       rmu * g1yi(:,3) 
      &             +      rmu * g2yi(:,2)
      &             -      rlsli(:,4)
-        rmi(:, 8) =       rlm * g1yi(:,2)
+        rmi(:, 9) =       rlm * g1yi(:,2)
      &             +   rlm2mu * g2yi(:,3)
      &             +      rlm * g3yi(:,4)
      &             -      rlsli(:,2)
-        rmi(:, 9) =       rmu * g2yi(:,4)
+        rmi(:, 10) =       rmu * g2yi(:,4)
      &             +      rmu * g3yi(:,3)
      &             -      rlsli(:,6)
-        rmi(:,10) =  rlm * u2 * g1yi(:,2) +    rmu * u1 * g1yi(:,3)
+        rmi(:,11) =  rlm * u2 * g1yi(:,2) +    rmu * u1 * g1yi(:,3)
      &             + rmu * u1 * g2yi(:,2) + rlm2mu * u2 * g2yi(:,3)
      &             + rmu * u3 * g2yi(:,4)
      &             + rmu * u3 * g3yi(:,3) +    rlm * u2 * g3yi(:,4)
      &             +    con   * g2yi(:,5)
+     &             + convib   * g2yi(:,6)
+	rmi(:,12) = convib    * g2yi(:,6)
+
 c
-      ri (:,7:10) = ri (:,7:10) + rmi(:,7:10)
-c     rmi(:,7:10) = rmi(:,7:10) + qdi(:,2:5)
+      ri (:,8:12) = ri (:,8:12) + rmi(:,8:12)
+c
+c!     rmi(:,8:12) = rmi(:,8:12) + qdi(:,2:5)
 c
 c!      flops = flops + 74*npro
 c
 c.... diffusive flux in x3-direction
 c
-c       rmi(:,11) = zero
-        rmi(:,12) =       rmu * g1yi(:,4)
+c       rmi(:,13) = zero
+        rmi(:,14) =       rmu * g1yi(:,4)
      &             +      rmu * g3yi(:,2)
      &             -      rlsli(:,5)
-        rmi(:,13) =       rmu * g2yi(:,4)
+        rmi(:,15) =       rmu * g2yi(:,4)
      &             +      rmu * g3yi(:,3)
      &             -      rlsli(:,6)
-        rmi(:,14) =       rlm * g1yi(:,2)
+        rmi(:,16) =       rlm * g1yi(:,2)
      &             +      rlm * g2yi(:,3)
      &             +   rlm2mu * g3yi(:,4)
      &             -   rlsli(:,3)
-        rmi(:,15) =     rlm * u3 * g1yi(:,2) + rmu * u1 * g1yi(:,4)
+        rmi(:,17) =     rlm * u3 * g1yi(:,2) + rmu * u1 * g1yi(:,4)
      &             +    rlm * u3 * g2yi(:,3) + rmu * u2 * g2yi(:,4)
      &             +    rmu * u1 * g3yi(:,2) + rmu * u2 * g3yi(:,3)
      &             + rlm2mu * u3 * g3yi(:,4)
-     &             +    con      * g3yi(:,5) 
+     &             +    con      * g3yi(:,5)
+     &             + convib      * g3yi(:,6) 
+	rmi(:,18) = convib       * g3yi(:,6)
+
 c
-      ri (:,12:15) = ri (:,12:15) + rmi(:,12:15)
+      ri (:,14:18) = ri (:,14:18) + rmi(:,14:18)
 c
 c!      flops = flops + 74*npro
 c

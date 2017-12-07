@@ -4,7 +4,8 @@
      &                     ei,     rk,     u1,
      &                     u2,     u3,     rLyi,   
      &                     ri,     rmi,    EGmass,
-     &                     shg,    shape,  WdetJ )
+     &                     shg,    shape,  WdetJ,
+     &                     eiv )
 !
 !----------------------------------------------------------------------
 !
@@ -29,6 +30,7 @@
 !  shg    (npro,nshl,nsd) : global grad's of shape functions
 !  shape  (npro,nshl)  : element shape functions      
 !  WdetJ  (npro)         : weighted Jacobian determinant
+!  eiv    (npro)         : internal energy (vibration)
 !     
 ! output:
 !  rLyi   (npro,nflow)           : least-squares residual vector
@@ -57,7 +59,7 @@
      &            rLyi(npro,nflow),          ri(npro,nflow*(nsd+1)),
      &            rmi(npro,nflow*(nsd+1)),   EGmass(npro,nedof,nedof),
      &            shg(npro,nshl,nsd),       shape(npro,nshl),
-     &            WdetJ(npro)
+     &            WdetJ(npro),              eiv(npro)
 !
 !  local arrays  
 !
@@ -73,25 +75,26 @@
 !
 !.... calculate integrated by part contribution of Euler flux (Galerkin)
 !
-!.... TODO: add 3 additional lines (6,12,18 or 16,17,18?)
-!
           ri(:, 1) = (- u1) * rho
           ri(:, 2) = (- u1) * rho * u1 - pres
           ri(:, 3) = (- u1) * rho * u2
           ri(:, 4) = (- u1) * rho * u3
           ri(:, 5) = (- u1) * rho * (ei + rk) - u1 * pres
+          ri(:, 6) = (- u1) * rho * eiv
 !
-          ri(:, 6) = (- u2) * rho
-          ri(:, 7) = (- u2) * rho * u1
-          ri(:, 8) = (- u2) * rho * u2 - pres
-          ri(:, 9) = (- u2) * rho * u3
-          ri(:,10) = (- u2) * rho * (ei + rk) - u2 * pres
+          ri(:, 7) = (- u2) * rho
+          ri(:, 8) = (- u2) * rho * u1
+          ri(:, 9) = (- u2) * rho * u2 - pres
+          ri(:,10) = (- u2) * rho * u3
+          ri(:,11) = (- u2) * rho * (ei + rk) - u2 * pres
+          ri(:,12) = (- u2) * rho * eiv
 !
-          ri(:,11) = (- u3) * rho
-          ri(:,12) = (- u3) * rho * u1
-          ri(:,13) = (- u3) * rho * u2
-          ri(:,14) = (- u3) * rho * u3 - pres
-          ri(:,15) = (- u3) * rho * (ei + rk) - u3 * pres
+          ri(:,13) = (- u3) * rho
+          ri(:,14) = (- u3) * rho * u1
+          ri(:,15) = (- u3) * rho * u2
+          ri(:,16) = (- u3) * rho * u3 - pres
+          ri(:,17) = (- u3) * rho * (ei + rk) - u3 * pres
+          ri(:,18) = (- u3) * rho * eiv
 !
 !      flops = flops + 28*npro
 !
@@ -99,84 +102,82 @@
 !
 !.... calculate ( A_i Y,i ) --> rLyi   Commented out zeros of A matrices
 !
-!.... TODO: comment out elem of rLyi that are zero
-!
         rLyi(:,1) = 
      &              A1(:,1,1) * g1yi(:,1) 
      &            + A1(:,1,2) * g1yi(:,2)
 !    &            + A1(:,1,3) * g1yi(:,3) 
 !    &            + A1(:,1,4) * g1yi(:,4)
      &            + A1(:,1,5) * g1yi(:,5)
-     &            + A1(:,1,6) * g1yi(:,6)
+!    &            + A1(:,1,6) * g1yi(:,6)
      &            + A2(:,1,1) * g2yi(:,1) 
 !    &            + A2(:,1,2) * g2yi(:,2)
      &            + A2(:,1,3) * g2yi(:,3) 
 !    &            + A2(:,1,4) * g2yi(:,4)
      &            + A2(:,1,5) * g2yi(:,5)
-     &            + A2(:,1,6) * g2yi(:,6)
+!    &            + A2(:,1,6) * g2yi(:,6)
      &            + A3(:,1,1) * g3yi(:,1) 
 !    &            + A3(:,1,2) * g3yi(:,2)
 !    &            + A3(:,1,3) * g3yi(:,3) 
      &            + A3(:,1,4) * g3yi(:,4)
      &            + A3(:,1,5) * g3yi(:,5)
-     &            + A3(:,1,6) * g3yi(:,6)
+!    &            + A3(:,1,6) * g3yi(:,6)
         rLyi(:,2) = 
      &              A1(:,2,1) * g1yi(:,1) 
      &            + A1(:,2,2) * g1yi(:,2)
 !    &            + A1(:,2,3) * g1yi(:,3) 
 !    &            + A1(:,2,4) * g1yi(:,4)
      &            + A1(:,2,5) * g1yi(:,5)
-     &            + A1(:,2,6) * g1yi(:,6)
+!    &            + A1(:,2,6) * g1yi(:,6)
      &            + A2(:,2,1) * g2yi(:,1) 
      &            + A2(:,2,2) * g2yi(:,2)
      &            + A2(:,2,3) * g2yi(:,3) 
 !    &            + A2(:,2,4) * g2yi(:,4)
      &            + A2(:,2,5) * g2yi(:,5)
-     &            + A2(:,2,6) * g2yi(:,6)
+!    &            + A2(:,2,6) * g2yi(:,6)
      &            + A3(:,2,1) * g3yi(:,1) 
      &            + A3(:,2,2) * g3yi(:,2)
 !    &            + A3(:,2,3) * g3yi(:,3) 
      &            + A3(:,2,4) * g3yi(:,4)
      &            + A3(:,2,5) * g3yi(:,5)
-     &            + A3(:,2,6) * g3yi(:,6)
+!    &            + A3(:,2,6) * g3yi(:,6)
         rLyi(:,3) = 
      &              A1(:,3,1) * g1yi(:,1) 
      &            + A1(:,3,2) * g1yi(:,2)
      &            + A1(:,3,3) * g1yi(:,3) 
 !    &            + A1(:,3,4) * g1yi(:,4)
      &            + A1(:,3,5) * g1yi(:,5)
-     &            + A1(:,3,6) * g1yi(:,6)
+!    &            + A1(:,3,6) * g1yi(:,6)
      &            + A2(:,3,1) * g2yi(:,1) 
 !    &            + A2(:,3,2) * g2yi(:,2)
      &            + A2(:,3,3) * g2yi(:,3) 
 !    &            + A2(:,3,4) * g2yi(:,4)
      &            + A2(:,3,5) * g2yi(:,5)
-     &            + A2(:,3,6) * g2yi(:,6)
+!    &            + A2(:,3,6) * g2yi(:,6)
      &            + A3(:,3,1) * g3yi(:,1) 
 !    &            + A3(:,3,2) * g3yi(:,2)
      &            + A3(:,3,3) * g3yi(:,3) 
      &            + A3(:,3,4) * g3yi(:,4)
      &            + A3(:,3,5) * g3yi(:,5)
-     &            + A3(:,3,6) * g2yi(:,6)
+!    &            + A3(:,3,6) * g2yi(:,6)
         rLyi(:,4) = 
      &              A1(:,4,1) * g1yi(:,1) 
      &            + A1(:,4,2) * g1yi(:,2)
 !    &            + A1(:,4,3) * g1yi(:,3) 
      &            + A1(:,4,4) * g1yi(:,4)
      &            + A1(:,4,5) * g1yi(:,5)
-     &            + A1(:,4,6) * g1yi(:,6)
+!    &            + A1(:,4,6) * g1yi(:,6)
      &            + A2(:,4,1) * g2yi(:,1) 
 !    &            + A2(:,4,2) * g2yi(:,2)
      &            + A2(:,4,3) * g2yi(:,3) 
      &            + A2(:,4,4) * g2yi(:,4)
      &            + A2(:,4,5) * g2yi(:,5)
-     &            + A2(:,4,6) * g2yi(:,6)
+!    &            + A2(:,4,6) * g2yi(:,6)
      &            + A3(:,4,1) * g3yi(:,1) 
 !    &            + A3(:,4,2) * g3yi(:,2)
 !    &            + A3(:,4,3) * g3yi(:,3) 
      &            + A3(:,4,4) * g3yi(:,4)
      &            + A3(:,4,5) * g3yi(:,5)
-     &            + A3(:,4,6) * g3yi(:,6)
+!    &            + A3(:,4,6) * g3yi(:,6)
         rLyi(:,5) = 
      &              A1(:,5,1) * g1yi(:,1) 
      &            + A1(:,5,2) * g1yi(:,2)
@@ -199,19 +200,19 @@
         rLyi(:,6) = 
      &              A1(:,6,1) * g1yi(:,1) 
      &            + A1(:,6,2) * g1yi(:,2)
-     &            + A1(:,6,3) * g1yi(:,3) 
-     &            + A1(:,6,4) * g1yi(:,4)
+!    &            + A1(:,6,3) * g1yi(:,3) 
+!    &            + A1(:,6,4) * g1yi(:,4)
      &            + A1(:,6,5) * g1yi(:,5)
      &            + A1(:,6,6) * g1yi(:,6)
      &            + A2(:,6,1) * g2yi(:,1) 
-     &            + A2(:,6,2) * g2yi(:,2)
+!    &            + A2(:,6,2) * g2yi(:,2)
      &            + A2(:,6,3) * g2yi(:,3) 
-     &            + A2(:,6,4) * g2yi(:,4)
+!    &            + A2(:,6,4) * g2yi(:,4)
      &            + A2(:,6,5) * g2yi(:,5)
      &            + A2(:,6,6) * g2yi(:,6)
      &            + A3(:,6,1) * g3yi(:,1) 
-     &            + A3(:,6,2) * g3yi(:,2)
-     &            + A3(:,6,3) * g3yi(:,3) 
+!    &            + A3(:,6,2) * g3yi(:,2)
+!    &            + A3(:,6,3) * g3yi(:,3) 
      &            + A3(:,6,4) * g3yi(:,4)
      &            + A3(:,6,5) * g3yi(:,5)
      &            + A3(:,6,6) * g3yi(:,6)
@@ -219,10 +220,8 @@
 !
 !.... add contribution to rmi
 !
-!.... TODO: need to change placement of rLyi in 'rmi'
-!
         if ((ires .eq. 2) .or. (ires .eq. 3))
-     &    rmi(:,16:20) = rLyi  ! modified residual uses non i.b.p form of conv.
+     &    rmi(:,19:24) = rLyi  ! modified residual uses non i.b.p form of conv.
 !
 !.... ---------------------->  LHS   <-----------------------
 !
@@ -311,10 +310,10 @@
      &                    fact1 * A1(:,3,5) 
      &                  + fact2 * A2(:,3,5) 
      &                  + fact3 * A3(:,3,5)
-           AiNbi(:,2,6) = 
-     &                    fact1 * A1(:,2,6) 
-     &                  + fact2 * A2(:,2,6) 
-     &                  + fact3 * A3(:,2,6)
+           AiNbi(:,3,6) = 
+     &                    fact1 * A1(:,3,6) 
+     &                  + fact2 * A2(:,3,6) 
+     &                  + fact3 * A3(:,3,6)
 
            AiNbi(:,4,1) = 
      &                    fact1 * A1(:,4,1) 
@@ -390,7 +389,6 @@
      &                    fact1 * A1(:,6,6) 
      &                  + fact2 * A2(:,6,6) 
      &                  + fact3 * A3(:,6,6)
-
 !
 !.... now loop through the row nodes and add (N_a A_i N_b,i) to
 !     the tangent matrix.

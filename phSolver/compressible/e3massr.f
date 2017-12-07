@@ -31,6 +31,8 @@ c
 c
 c.... add contribution of U at previous step
 c
+c.... TODO: modify for extended matricies
+c
        if(ires.eq.1 .or. ires .eq. 3) then
 
         ri(:,16) = ri(:,16) 
@@ -73,6 +75,8 @@ c
          if(ires.ne.1) then
 c
 c the modified residual
+c
+c.... TODO: extend modified residual
 c
             fct1=almi/gami/alfi*dtgl
 

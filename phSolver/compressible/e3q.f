@@ -76,13 +76,12 @@ c
 c.... calculate the integration variables necessary for the
 c     formation of q
 c
-
         call e3qvar   (ycl,        shape,        shdrv,   
      &                 rho,       xl,           g1yi,
      &                 g2yi,      g3yi,         shg,
      &                 dxidx,     WdetJ,        T,
      &                 cp,        u1,           u2,
-     &                 u3                                 )              
+     &                 u3)              
 c
 c.... compute diffusive flux vector at this integration point
 c
@@ -91,13 +90,15 @@ c.... get material properties
 c
         call getDiff (T,        cp,       rho,        ycl,
      &                rmu,      rlm,      rlm2mu,     con,  shape,
-     &                xmudmi,   xl)
+     &                xmudmi,   xl,       convib)
           
         idflow = 0
         if(idiff >= 1) then   !so taking care of all the idiff=1,2,3
         idflow = idflow+12
 c
 c.... compute diffusive fluxes 
+c
+c.... TODO: modify 'qdi' (extend length)
 c
 c.... diffusive flux in x1-direction
 c
@@ -149,6 +150,8 @@ c
 c
 c.... assemble contribution of qdi to ql,i.e., contribution to 
 c     each element node
+c
+c.... TODO: modify ql matrix
 c
         do i=1,nshl
            ql(:,i,1 ) = ql(:,i,1 )+ shape(:,i)*WdetJ*qdi(:,1 )
@@ -203,6 +206,8 @@ c     formation of q
 c
 c.... compute the global gradient of Yt-variables, assuming 6th entry as 
 c.... the phase indicator function 
+c
+c.... TODO: phase indicator fcn (6 to 7)
 c
 c  Yt_{,x_i}=SUM_{a=1}^nshl (N_{a,x_i}(int) Yta)
 c

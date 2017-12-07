@@ -133,23 +133,22 @@ c
         
         ithm = 6
 c
-c.... TODO: change passed variables to getthm
+c.... TODO: rk is not calculated or needed in getthm (remove?)
 c
         call getthm (dui(:,1),   dui(:,5),     Sclr,
      &               rk,         rho,          ei,
      &               tmp,        tmp,          tmp,
      &               tmp,        tmp,          tmp,
      &               tmp,        tmp,          tmp,
-     &               tmp,        tmp,          tmp)
+     &               eiv,        tmp,          dui(:,6))
 c     
-c.... TODO: update dui
 c
         dui(:,1) = rho
         dui(:,2) = rho * dui(:,2)
         dui(:,3) = rho * dui(:,3)
         dui(:,4) = rho * dui(:,4)
-        dui(:,5) = 
-        dui(:,6) = 
+        dui(:,5) = rho * (ei + rk)
+        dui(:,6) = rho * eiv
 c  
        ttim(10) = ttim(10) + secs(0.0)
 c
@@ -181,8 +180,6 @@ c
        if( (iLES.gt.10).and.(iLES.lt.20))  then  ! bardina
        rlsli = zero
        do n = 1, nshl 
-c
-c.... TODO: confirm no update required
 c
           rlsli(:,1) = rlsli(:,1) + shape(:,n) * rlsl(:,n,1)
           rlsli(:,2) = rlsli(:,2) + shape(:,n) * rlsl(:,n,2)
@@ -400,8 +397,6 @@ c
 c
         enddo
       endif
-
-
 c
 c     
          divqi = zero

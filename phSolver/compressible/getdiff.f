@@ -1,6 +1,6 @@
         subroutine getDiff (T,      cp,     rho,    ycl,
      &                      rmu,    rlm,    rlm2mu, con, shp,
-     &                      xmudmi, xl, convib)
+     &                      xmudmi, xl,     convib)
 
 c----------------------------------------------------------------------
 c

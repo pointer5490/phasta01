@@ -104,9 +104,7 @@ c       if(idiff.ne.-1)
 c       
        if(ires.eq.1 .or. ires .eq. 3) then
 c       rLymi = rLyi
-
 c
-c.... TODO: comment out entries that are zero
 c
         rLyi(:,1) = rLyi(:,1) 
      &            + A0(:,1,1)*aci(:,1)
@@ -114,7 +112,7 @@ c    &            + A0(:,1,2)*aci(:,2)
 c    &            + A0(:,1,3)*aci(:,3)
 c    &            + A0(:,1,4)*aci(:,4)
      &            + A0(:,1,5)*aci(:,5)
-     &            + A0(:,1,5)*aci(:,6)
+c    &            + A0(:,1,6)*aci(:,6)
 c
         rLyi(:,2) = rLyi(:,2) 
      &            + A0(:,2,1)*aci(:,1)
@@ -122,7 +120,7 @@ c
 c    &            + A0(:,2,3)*aci(:,3)
 c    &            + A0(:,2,4)*aci(:,4)
      &            + A0(:,2,5)*aci(:,5)
-     &            + A0(:,2,6)*aci(:,6)
+c    &            + A0(:,2,6)*aci(:,6)
 c
         rLyi(:,3) = rLyi(:,3) 
      &            + A0(:,3,1)*aci(:,1)
@@ -130,7 +128,7 @@ c    &            + A0(:,3,2)*aci(:,2)
      &            + A0(:,3,3)*aci(:,3)
 c    &            + A0(:,3,4)*aci(:,4)
      &            + A0(:,3,5)*aci(:,5)
-     &            + A0(:,3,6)*aci(:,6)
+c    &            + A0(:,3,6)*aci(:,6)
 c
         rLyi(:,4) = rLyi(:,4) 
      &            + A0(:,4,1)*aci(:,1)
@@ -138,7 +136,7 @@ c    &            + A0(:,4,2)*aci(:,2)
 c    &            + A0(:,4,3)*aci(:,3)
      &            + A0(:,4,4)*aci(:,4)
      &            + A0(:,4,5)*aci(:,5)
-     &            + A0(:,4,6)*aci(:,6)
+c    &            + A0(:,4,6)*aci(:,6)
 c
         rLyi(:,5) = rLyi(:,5) 
      &            + A0(:,5,1)*aci(:,1)
@@ -150,9 +148,9 @@ c
 c
         rLyi(:,6) = rLyi(:,6) 
      &            + A0(:,6,1)*aci(:,1)
-     &            + A0(:,6,2)*aci(:,2)
-     &            + A0(:,6,3)*aci(:,3)
-     &            + A0(:,6,4)*aci(:,4)
+c    &            + A0(:,6,2)*aci(:,2)
+c    &            + A0(:,6,3)*aci(:,3)
+c    &            + A0(:,6,4)*aci(:,4)
      &            + A0(:,6,5)*aci(:,5)
      &            + A0(:,6,6)*aci(:,6)
 c
@@ -254,12 +252,15 @@ c  A1 * Tau L(Y):  to be hit on left with Na,x in e3wmlt
 c
 c.... TODO: modify contributions to rmi
 c
+c.... TODO: comment out zero entries
+c
         rmi(:,1) =  
      &               A1(:,1,1) * rLymi(:,1) 
      &             + A1(:,1,2) * rLymi(:,2)
 c    &             + A1(:,1,3) * rLymi(:,3) 
 c    &             + A1(:,1,4) * rLymi(:,4)
      &             + A1(:,1,5) * rLymi(:,5)
+     &             + A1(:,1,6) * rLymi(:,6)
      &             + rmi(:,1)
         rmi(:,2) =
      &               A1(:,2,1) * rLymi(:,1) 
@@ -267,6 +268,7 @@ c    &             + A1(:,1,4) * rLymi(:,4)
 c    &             + A1(:,2,3) * rLymi(:,3) 
 c    &             + A1(:,2,4) * rLymi(:,4)
      &             + A1(:,2,5) * rLymi(:,5)
+     &             + A1(:,2,6) * rLymi(:,6) 
      &             + rmi(:,2)
         rmi(:,3) =
      &               A1(:,3,1) * rLymi(:,1) 
@@ -274,6 +276,7 @@ c    &             + A1(:,2,4) * rLymi(:,4)
      &             + A1(:,3,3) * rLymi(:,3) 
 c    &             + A1(:,3,4) * rLymi(:,4)
      &             + A1(:,3,5) * rLymi(:,5)
+     &             + A1(:,3,6) * rLymi(:,6)
      &             + rmi(:,3)
         rmi(:,4) =
      &               A1(:,4,1) * rLymi(:,1) 
@@ -281,6 +284,7 @@ c    &             + A1(:,3,4) * rLymi(:,4)
 c    &             + A1(:,4,3) * rLymi(:,3) 
      &             + A1(:,4,4) * rLymi(:,4)
      &             + A1(:,4,5) * rLymi(:,5)
+     &             + A1(:,4,6) * rLymi(:,6)
      &             + rmi(:,4)
         rmi(:,5) =
      &               A1(:,5,1) * rLymi(:,1) 
@@ -288,9 +292,12 @@ c    &             + A1(:,4,3) * rLymi(:,3)
      &             + A1(:,5,3) * rLymi(:,3) 
      &             + A1(:,5,4) * rLymi(:,4)
      &             + A1(:,5,5) * rLymi(:,5)
+     &             + A1(:,5,6) * rLymi(:,6)
      &             + rmi(:,5)
 c
 c  A2 * Tau L(Y),  to be hit on left with Na,y 
+c
+c.... TODO: LEFT OFF HERE 12/7
 c
         rmi(:,6) = 
      &               A2(:,1,1) * rLymi(:,1) 

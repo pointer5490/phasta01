@@ -45,7 +45,9 @@ c
      &            dxidx(npro,nsd,nsd), WdetJ(npro),
      &            T(npro),             cp(npro),                  
      &            u1(npro),            u2(npro),
-     &            u3(npro),            pres(npro)
+     &            u3(npro),            pres(npro)k
+     &            Tv(npro)
+
 c
 c  local arrays
 c
@@ -62,8 +64,8 @@ c
        u2   = zero
        u3   = zero
        T    = zero
-
-
+       Tv   = zero
+c
 c
        do n = 1, nshl
 c
@@ -74,6 +76,7 @@ c
           u2   = u2   + shp(:,n) * ycl(:,n,3)
           u3   = u3   + shp(:,n) * ycl(:,n,4)
           T    = T    + shp(:,n) * ycl(:,n,5)
+          Tv   = Tv   + shp(:,n) * ycl(:,n,6)
        enddo
 c
 c$$$c.... compute cp, only thermodynamic property needed for qdiff
@@ -91,12 +94,13 @@ c
         endif
 c
         if (Navier .eq. 1) ithm = 7
-
+c
         call getthm (pres,            T,                  Sclr,
      &               tmp,             rho,                tmp,
      &               tmp,             tmp,                tmp,
      &               cp,              tmp,                tmp,
-     &               tmp,             tmp)
+     &               tmp,             tmp,                tmp,
+     &               tmp,             tmp,                Tv)
 c
 c.... --------------------->  Element Metrics  <-----------------------
 c
@@ -122,19 +126,22 @@ c
           g1yi(:,3) = g1yi(:,3) + shg(:,n,1) * ycl(:,n,3)
           g1yi(:,4) = g1yi(:,4) + shg(:,n,1) * ycl(:,n,4)
           g1yi(:,5) = g1yi(:,5) + shg(:,n,1) * ycl(:,n,5)
+          g1yi(:,6) = g1yi(:,6) + shg(:,n,1) * ycl(:,n,6)
 c
           g2yi(:,1) = g2yi(:,1) + shg(:,n,2) * ycl(:,n,1)
           g2yi(:,2) = g2yi(:,2) + shg(:,n,2) * ycl(:,n,2)
           g2yi(:,3) = g2yi(:,3) + shg(:,n,2) * ycl(:,n,3)
           g2yi(:,4) = g2yi(:,4) + shg(:,n,2) * ycl(:,n,4)
           g2yi(:,5) = g2yi(:,5) + shg(:,n,2) * ycl(:,n,5)
+          g2yi(:,6) = g2yi(:,6) + shg(:,n,2) * ycl(:,n,6)
 c
           g3yi(:,1) = g3yi(:,1) + shg(:,n,3) * ycl(:,n,1)
           g3yi(:,2) = g3yi(:,2) + shg(:,n,3) * ycl(:,n,2)
           g3yi(:,3) = g3yi(:,3) + shg(:,n,3) * ycl(:,n,3)
           g3yi(:,4) = g3yi(:,4) + shg(:,n,3) * ycl(:,n,4)
           g3yi(:,5) = g3yi(:,5) + shg(:,n,3) * ycl(:,n,5)
-
+          g3yi(:,6) = g3yi(:,6) + shg(:,n,3) * ycl(:,n,6)
+c
         enddo
 
         ttim(34) = ttim(34) + secs(0.0)
