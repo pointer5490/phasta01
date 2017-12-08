@@ -318,7 +318,7 @@ c
        u31 = u3 * u1
        u23 = u2 * u3
 c
-c.... TODO: expand A0inv
+c.... TODO: expand A0inv (is inverse of new A0 singular?)
 c
        A0inv( :,1) = e5bar*fact1
        A0inv( :,2) = c1bar*fact1

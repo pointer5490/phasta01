@@ -345,41 +345,11 @@ c....****************** If (ipress.eq.3) *********************
 c
 	if (ipress.eq.3) then
 c
- 	if (iLSet .eq. 0)then 
+ 		if (iLSet .eq. 0)then 
 c        
-	rho  = pres / ( Rgas * T )
-c	
-        else     !  two fluid properties used in this model
-
-!        Smooth the tranistion of properties for a "distance" of epsilon_ls
-!        around the interface.  Here "distance" is define as the value of the 
-!        levelset function.  If the levelset function is properly defined, 
-!        this is the true distance normal from the front.  Of course, the 
-!        distance is in a driection normal to the front.
-               do i= 1, npro
-                  if (sclr(i) .lt. - epsilon_ls)then
-                     prop_blend(i) = zero
-                  elseif  (abs(sclr(i)) .le. epsilon_ls)then
-                     prop_blend(i) = 0.5*(one + Sclr(i)/epsilon_ls +
-     &                    (sin(pi*Sclr(i)/epsilon_ls))/pi )
-                  elseif (sclr(i) .gt. epsilon_ls) then
-                     prop_blend(i) = one
-                  endif
-               enddo
-               fact = datmat(1,1,2)/datmat(1,1,1)
-c              rsrhol(:) = pres(:) / ( Rgas * T(:) )
-c              call eqs(pres,T,rsrhol)
-c              rsrhog(:) = fact*pres(:) / ( Rgas * T(:))
-               rsrhog(:) = pres(:) / ( Rgas * T(:))
-               rsrhol(:)  = datmat(1,1,1)*
-     &              (1+0.000000000517992*(pres-18.02))
-               rho(:)=rsrhol(:)*prop_blend(:)
-     &              +rsrhog(:)*(1-prop_blend(:))
-c ..... for the VOF case .. in case if we want to run VOF
-c$$$         prop_blend(:) = min((max(sclr(:),0.0)),1.0)
-c$$$         rho(:)=rsrhol(:) * prop_blend(:) + rsrhog(:) * (1-prop_blend(:))
+		rho  = pres / ( Rgas * T )
 c
-	endif	!endif for iLSet
+		endif	!endif for iLSet
 c  	
 c		
 		if (ithm .ge. 7) then

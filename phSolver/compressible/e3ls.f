@@ -250,17 +250,13 @@ c
 c
 c  A1 * Tau L(Y):  to be hit on left with Na,x in e3wmlt
 c
-c.... TODO: modify contributions to rmi
-c
-c.... TODO: comment out zero entries
-c
         rmi(:,1) =  
      &               A1(:,1,1) * rLymi(:,1) 
      &             + A1(:,1,2) * rLymi(:,2)
 c    &             + A1(:,1,3) * rLymi(:,3) 
 c    &             + A1(:,1,4) * rLymi(:,4)
      &             + A1(:,1,5) * rLymi(:,5)
-     &             + A1(:,1,6) * rLymi(:,6)
+c    &             + A1(:,1,6) * rLymi(:,6)
      &             + rmi(:,1)
         rmi(:,2) =
      &               A1(:,2,1) * rLymi(:,1) 
@@ -268,7 +264,7 @@ c    &             + A1(:,1,4) * rLymi(:,4)
 c    &             + A1(:,2,3) * rLymi(:,3) 
 c    &             + A1(:,2,4) * rLymi(:,4)
      &             + A1(:,2,5) * rLymi(:,5)
-     &             + A1(:,2,6) * rLymi(:,6) 
+c    &             + A1(:,2,6) * rLymi(:,6) 
      &             + rmi(:,2)
         rmi(:,3) =
      &               A1(:,3,1) * rLymi(:,1) 
@@ -276,7 +272,7 @@ c    &             + A1(:,2,4) * rLymi(:,4)
      &             + A1(:,3,3) * rLymi(:,3) 
 c    &             + A1(:,3,4) * rLymi(:,4)
      &             + A1(:,3,5) * rLymi(:,5)
-     &             + A1(:,3,6) * rLymi(:,6)
+c    &             + A1(:,3,6) * rLymi(:,6)
      &             + rmi(:,3)
         rmi(:,4) =
      &               A1(:,4,1) * rLymi(:,1) 
@@ -284,7 +280,7 @@ c    &             + A1(:,3,4) * rLymi(:,4)
 c    &             + A1(:,4,3) * rLymi(:,3) 
      &             + A1(:,4,4) * rLymi(:,4)
      &             + A1(:,4,5) * rLymi(:,5)
-     &             + A1(:,4,6) * rLymi(:,6)
+c    &             + A1(:,4,6) * rLymi(:,6)
      &             + rmi(:,4)
         rmi(:,5) =
      &               A1(:,5,1) * rLymi(:,1) 
@@ -294,90 +290,120 @@ c    &             + A1(:,4,3) * rLymi(:,3)
      &             + A1(:,5,5) * rLymi(:,5)
      &             + A1(:,5,6) * rLymi(:,6)
      &             + rmi(:,5)
+	rmi(:,6) = 
+     &               A1(:,6,1) * rLymi(:,1)
+     &             + A1(:,6,2) * rLymi(:,2)
+c    &             + A1(:,6,3) * rLymi(:,3)
+c    &             + A1(:,6,4) * rLymi(:,4)
+     &             + A1(:,6,5) * rLymi(:,5)
+     &             + A1(:,6,6) * rLymi(:,6)
+     &             + rmi(:,6)
 c
 c  A2 * Tau L(Y),  to be hit on left with Na,y 
 c
-c.... TODO: LEFT OFF HERE 12/7
-c
-        rmi(:,6) = 
+        rmi(:,7) = 
      &               A2(:,1,1) * rLymi(:,1) 
 c    &             + A2(:,1,2) * rLymi(:,2)
      &             + A2(:,1,3) * rLymi(:,3) 
 c    &             + A2(:,1,4) * rLymi(:,4)
      &             + A2(:,1,5) * rLymi(:,5)
-     &             + rmi(:,6)
-        rmi(:,7) =
+c    &             + A2(:,1,6) * rLymi(:,6)
+     &             + rmi(:,7)
+        rmi(:,8) =
      &               A2(:,2,1) * rLymi(:,1) 
      &             + A2(:,2,2) * rLymi(:,2)
      &             + A2(:,2,3) * rLymi(:,3) 
 c    &             + A2(:,2,4) * rLymi(:,4)
      &             + A2(:,2,5) * rLymi(:,5)
-     &             + rmi(:,7)
-        rmi(:,8) =
+c    &             + A2(:,2,6) * rLymi(:,6)
+     &             + rmi(:,8)
+        rmi(:,9) =
      &               A2(:,3,1) * rLymi(:,1) 
 c    &             + A2(:,3,2) * rLymi(:,2)
      &             + A2(:,3,3) * rLymi(:,3) 
 c    &             + A2(:,3,4) * rLymi(:,4)
      &             + A2(:,3,5) * rLymi(:,5)
-     &             + rmi(:,8)
-        rmi(:,9) =
+c    &             + A2(:,3,6) * rLymi(:,6)
+     &             + rmi(:,9)
+        rmi(:,10) =
      &               A2(:,4,1) * rLymi(:,1) 
 c    &             + A2(:,4,2) * rLymi(:,2)
      &             + A2(:,4,3) * rLymi(:,3) 
      &             + A2(:,4,4) * rLymi(:,4)
      &             + A2(:,4,5) * rLymi(:,5)
-     &             + rmi(:,9)
-        rmi(:,10) =
+c    &             + A2(:,4,6) * rLymi(:,6)
+     &             + rmi(:,10)
+        rmi(:,11) =
      &               A2(:,5,1) * rLymi(:,1) 
      &             + A2(:,5,2) * rLymi(:,2)
      &             + A2(:,5,3) * rLymi(:,3) 
      &             + A2(:,5,4) * rLymi(:,4)
      &             + A2(:,5,5) * rLymi(:,5)
-     &             + rmi(:,10)
+     &             + A2(:,5,6) * rLymi(:,6)
+     &             + rmi(:,11)
+	rmi(:,12) = 
+     &               A2(:,6,1) * rLymi(:,1) 
+c    &             + A2(:,6,2) * rLymi(:,2)
+     &             + A2(:,6,3) * rLymi(:,3) 
+c    &             + A2(:,6,4) * rLymi(:,4)
+     &             + A2(:,6,5) * rLymi(:,5)
+     &             + A2(:,6,6) * rLymi(:,6)
+     &             + rmi(:,12)     
 c
 c  A3 * Tau L(Y)  to be hit on left with Na,z
 c
-        rmi(:,11) = 
+        rmi(:,13) = 
      &               A3(:,1,1) * rLymi(:,1) 
 c    &             + A3(:,1,2) * rLymi(:,2)
 c    &             + A3(:,1,3) * rLymi(:,3) 
      &             + A3(:,1,4) * rLymi(:,4)
      &             + A3(:,1,5) * rLymi(:,5)
-     &             + rmi(:,11)
-        rmi(:,12) =
+c    &             + A3(:,1,6) * rLymi(:,6)
+     &             + rmi(:,13)
+        rmi(:,14) =
      &               A3(:,2,1) * rLymi(:,1) 
      &             + A3(:,2,2) * rLymi(:,2)
 c    &             + A3(:,2,3) * rLymi(:,3) 
      &             + A3(:,2,4) * rLymi(:,4)
      &             + A3(:,2,5) * rLymi(:,5)
-     &             + rmi(:,12)
-        rmi(:,13) =
+c    &             + A3(:,2,6) * rLymi(:,6)
+     &             + rmi(:,14)
+        rmi(:,15) =
      &               A3(:,3,1) * rLymi(:,1) 
 c    &             + A3(:,3,2) * rLymi(:,2)
      &             + A3(:,3,3) * rLymi(:,3) 
      &             + A3(:,3,4) * rLymi(:,4)
      &             + A3(:,3,5) * rLymi(:,5)
-     &             + rmi(:,13)
-        rmi(:,14) =
+c    &             + A3(:,3,6) * rLymi(:,6)
+     &             + rmi(:,15)
+        rmi(:,16) =
      &               A3(:,4,1) * rLymi(:,1) 
 c    &             + A3(:,4,2) * rLymi(:,2)
 c    &             + A3(:,4,3) * rLymi(:,3) 
      &             + A3(:,4,4) * rLymi(:,4)
      &             + A3(:,4,5) * rLymi(:,5)
-     &             + rmi(:,14)
-        rmi(:,15) =
+c    &             + A3(:,4,6) * rLymi(:,6)
+     &             + rmi(:,16)
+        rmi(:,17) =
      &               A3(:,5,1) * rLymi(:,1) 
      &             + A3(:,5,2) * rLymi(:,2)
      &             + A3(:,5,3) * rLymi(:,3) 
      &             + A3(:,5,4) * rLymi(:,4)
      &             + A3(:,5,5) * rLymi(:,5)
-     &             + rmi(:,15)
+     &             + A3(:,5,6) * rLymi(:,6)
+     &             + rmi(:,17)
+	rmi(:,18) = 
+     &               A3(:,6,1) * rLymi(:,1) 
+c    &             + A3(:,6,2) * rLymi(:,2)
+c    &             + A3(:,6,3) * rLymi(:,3) 
+     &             + A3(:,6,4) * rLymi(:,4)
+     &             + A3(:,6,5) * rLymi(:,5)
+     &             + A3(:,6,6) * rLymi(:,6)
+     &             + rmi(:,18)
+c
       endif  !ires.ne.1
-
 c
 c  same thing for the real residual
-c
-c.... TODO: add contributions to ri
 c
        if(ires.eq.3 .or. ires .eq. 1) then  ! we need the total residual
         ri(:,1) = 
@@ -386,6 +412,7 @@ c
 c    &             + A1(:,1,3) * rLyi(:,3) 
 c    &             + A1(:,1,4) * rLyi(:,4)
      &             + A1(:,1,5) * rLyi(:,5)
+c    &             + A1(:,1,6) * rLyi(:,6)
      &             + ri(:,1)
         ri(:,2) =
      &               A1(:,2,1) * rLyi(:,1) 
@@ -393,6 +420,7 @@ c    &             + A1(:,1,4) * rLyi(:,4)
 c    &             + A1(:,2,3) * rLyi(:,3) 
 c    &             + A1(:,2,4) * rLyi(:,4)
      &             + A1(:,2,5) * rLyi(:,5)
+c    &             + A1(:,2,6) * rLyi(:,6)
      &             + ri(:,2)
         ri(:,3) =
      &               A1(:,3,1) * rLyi(:,1) 
@@ -400,6 +428,7 @@ c    &             + A1(:,2,4) * rLyi(:,4)
      &             + A1(:,3,3) * rLyi(:,3) 
 c    &             + A1(:,3,4) * rLyi(:,4)
      &             + A1(:,3,5) * rLyi(:,5)
+c    &             + A1(:,3,6) * rLyi(:,6)
      &             + ri(:,3)
         ri(:,4) =
      &               A1(:,4,1) * rLyi(:,1) 
@@ -407,6 +436,7 @@ c    &             + A1(:,3,4) * rLyi(:,4)
 c    &             + A1(:,4,3) * rLyi(:,3) 
      &             + A1(:,4,4) * rLyi(:,4)
      &             + A1(:,4,5) * rLyi(:,5)
+c    &             + A1(:,4,6) * rLyi(:,6)
      &             + ri(:,4)
         ri(:,5) =
      &               A1(:,5,1) * rLyi(:,1) 
@@ -414,78 +444,114 @@ c    &             + A1(:,4,3) * rLyi(:,3)
      &             + A1(:,5,3) * rLyi(:,3) 
      &             + A1(:,5,4) * rLyi(:,4)
      &             + A1(:,5,5) * rLyi(:,5)
+     &             + A1(:,5,6) * rLyi(:,6)
      &             + ri(:,5)
+        ri(:,6) =
+     &               A1(:,6,1) * rLyi(:,1) 
+     &             + A1(:,6,2) * rLyi(:,2)
+c    &             + A1(:,6,3) * rLyi(:,3) 
+c    &             + A1(:,6,4) * rLyi(:,4)
+     &             + A1(:,6,5) * rLyi(:,5)
+     &             + A1(:,6,6) * rLyi(:,6)
+     &             + ri(:,6)
 c
-        ri(:,6) = 
+        ri(:,7) = 
      &               A2(:,1,1) * rLyi(:,1) 
 c    &             + A2(:,1,2) * rLyi(:,2)
      &             + A2(:,1,3) * rLyi(:,3) 
 c    &             + A2(:,1,4) * rLyi(:,4)
      &             + A2(:,1,5) * rLyi(:,5)
-     &             + ri(:,6)
-        ri(:,7) =
+c    &             + A2(:,1,6) * rLyi(:,6)
+     &             + ri(:,7)
+        ri(:,8) =
      &               A2(:,2,1) * rLyi(:,1) 
      &             + A2(:,2,2) * rLyi(:,2)
      &             + A2(:,2,3) * rLyi(:,3) 
 c    &             + A2(:,2,4) * rLyi(:,4)
      &             + A2(:,2,5) * rLyi(:,5)
-     &             + ri(:,7)
-        ri(:,8) =
+c    &             + A2(:,2,6) * rLyi(:,6)
+     &             + ri(:,8)
+        ri(:,9) =
      &               A2(:,3,1) * rLyi(:,1) 
 c    &             + A2(:,3,2) * rLyi(:,2)
      &             + A2(:,3,3) * rLyi(:,3) 
 c    &             + A2(:,3,4) * rLyi(:,4)
      &             + A2(:,3,5) * rLyi(:,5)
-     &             + ri(:,8)
-        ri(:,9) =
+c    &             + A2(:,3,6) * rLyi(:,6)
+     &             + ri(:,9)
+        ri(:,10) =
      &               A2(:,4,1) * rLyi(:,1) 
 c    &             + A2(:,4,2) * rLyi(:,2)
      &             + A2(:,4,3) * rLyi(:,3) 
      &             + A2(:,4,4) * rLyi(:,4)
      &             + A2(:,4,5) * rLyi(:,5)
-     &             + ri(:,9)
-        ri(:,10) =
-     &               A2(:,5,1) * rLyi(:,1) 
+c    &             + A2(:,4,6) * rLyi(:,6)
+     &             + ri(:,10)
+        ri(:,11) =
+     &               A2(:,5,1) * rLyi(:,1)
      &             + A2(:,5,2) * rLyi(:,2)
      &             + A2(:,5,3) * rLyi(:,3) 
      &             + A2(:,5,4) * rLyi(:,4)
      &             + A2(:,5,5) * rLyi(:,5)
-     &             + ri(:,10)
-        ri(:,11) = 
+     &             + A2(:,5,6) * rLyi(:,6)
+     &             + ri(:,11)
+	ri(:,12) = 
+     &               A2(:,6,1) * rLyi(:,1)
+c    &             + A2(:,6,2) * rLyi(:,2)
+     &             + A2(:,6,3) * rLyi(:,3) 
+c    &             + A2(:,6,4) * rLyi(:,4)
+     &             + A2(:,6,5) * rLyi(:,5)
+     &             + A2(:,6,6) * rLyi(:,6)
+     &             + ri(:,12)
+c
+        ri(:,13) = 
      &               A3(:,1,1) * rLyi(:,1) 
 c    &             + A3(:,1,2) * rLyi(:,2)
 c    &             + A3(:,1,3) * rLyi(:,3) 
      &             + A3(:,1,4) * rLyi(:,4)
      &             + A3(:,1,5) * rLyi(:,5)
-     &             + ri(:,11)
-        ri(:,12) =
+c    &             + A3(:,1,6) * rLyi(:,6)
+     &             + ri(:,13)
+        ri(:,14) =
      &               A3(:,2,1) * rLyi(:,1) 
      &             + A3(:,2,2) * rLyi(:,2)
 c    &             + A3(:,2,3) * rLyi(:,3) 
      &             + A3(:,2,4) * rLyi(:,4)
      &             + A3(:,2,5) * rLyi(:,5)
-     &             + ri(:,12)
-        ri(:,13) =
+c    &             + A3(:,2,6) * rLyi(:,6)
+     &             + ri(:,14)
+        ri(:,15) =
      &               A3(:,3,1) * rLyi(:,1) 
 c    &             + A3(:,3,2) * rLyi(:,2)
      &             + A3(:,3,3) * rLyi(:,3) 
      &             + A3(:,3,4) * rLyi(:,4)
      &             + A3(:,3,5) * rLyi(:,5)
-     &             + ri(:,13)
-        ri(:,14) =
+c    &             + A3(:,3,6) * rLyi(:,6)
+     &             + ri(:,15)
+        ri(:,16) =
      &               A3(:,4,1) * rLyi(:,1) 
 c    &             + A3(:,4,2) * rLyi(:,2)
 c    &             + A3(:,4,3) * rLyi(:,3) 
      &             + A3(:,4,4) * rLyi(:,4)
      &             + A3(:,4,5) * rLyi(:,5)
-     &             + ri(:,14)
-        ri(:,15) =
+c    &             + A3(:,4,6) * rLyi(:,6)
+     &             + ri(:,16)
+        ri(:,17) =
      &               A3(:,5,1) * rLyi(:,1) 
      &             + A3(:,5,2) * rLyi(:,2)
      &             + A3(:,5,3) * rLyi(:,3) 
      &             + A3(:,5,4) * rLyi(:,4)
      &             + A3(:,5,5) * rLyi(:,5)
-     &             + ri(:,15)
+     &             + A3(:,5,6) * rLyi(:,6)
+     &             + ri(:,17)
+	ri(:,18) = 
+     &               A3(:,6,1) * rLyi(:,1) 
+c    &             + A3(:,6,2) * rLyi(:,2)
+c    &             + A3(:,6,3) * rLyi(:,3) 
+     &             + A3(:,6,4) * rLyi(:,4)
+     &             + A3(:,6,5) * rLyi(:,5)
+     &             + A3(:,6,6) * rLyi(:,6)
+     &             + ri(:,18)
 c
        endif ! for ires=3 or 1
 
@@ -497,7 +563,7 @@ c
 c.... calculate (Atau) <-- (A_1 tau) (Recall that we are using a 
 c                                     diagonal tau here)          
 c
-c.... TODO: new contributions to Atau
+c.... TODO: new contributions to Atau (3 instances total)
 c          
           if (itau.lt.10) then
 
@@ -524,8 +590,6 @@ c
 c     
 c.... calculate (A_1 tau A_0) (for L.S. time term of EGmass)
 c
-c.... TODO: contributions to A1tauA0
-c
        do j = 1, nflow
           do i = 1, nflow
              A1tauA0(:,i,j) = 
@@ -533,13 +597,12 @@ c
      &            Atau(:,i,2)*A0(:,2,j) +
      &            Atau(:,i,3)*A0(:,3,j) +
      &            Atau(:,i,4)*A0(:,4,j) +
-     &            Atau(:,i,5)*A0(:,5,j)
+     &            Atau(:,i,5)*A0(:,5,j) +
+     &            Atau(:,i,6)*A0(:,6,j)
           enddo
        enddo
 c
 c.... add (A_1 tau A_1) to stiff [1,1]
-c
-c.... TODO: contributions to stiff
 c
        do j = 1, nflow
           do i = 1, nflow
@@ -549,20 +612,24 @@ c
      &            + Atau(:,i,3)*A1(:,3,j)
      &            + Atau(:,i,4)*A1(:,4,j)
      &            + Atau(:,i,5)*A1(:,5,j)
+     &            + Atau(:,i,6)*A1(:,6,j)
      &            )
           enddo
        enddo
 c
 c.... add (A_1 tau A_2) to stiff [1,2]
 c
+c.... TODO: verify change to 'j+6' and 'j+12' OK
+c
        do j = 1, nflow
           do i = 1, nflow
-             stiff(:,i,j+5) = stiff(:,i,j+5) + (
+             stiff(:,i,j+6) = stiff(:,i,j+6) + (
      &              Atau(:,i,1)*A2(:,1,j)
      &            + Atau(:,i,2)*A2(:,2,j)
      &            + Atau(:,i,3)*A2(:,3,j)
      &            + Atau(:,i,4)*A2(:,4,j)
      &            + Atau(:,i,5)*A2(:,5,j)
+     &            + Atau(:,i,6)*A2(:,6,j)
      &            )
           enddo
        enddo
@@ -571,12 +638,13 @@ c.... add (A_1 tau A_3) to stiff [1,3]
 c
        do j = 1, nflow
           do i = 1, nflow
-             stiff(:,i,j+10) = stiff(:,i,j+10) + (
+             stiff(:,i,j+12) = stiff(:,i,j+12) + (
      &              Atau(:,i,1)*A3(:,1,j)
      &            + Atau(:,i,2)*A3(:,2,j)
      &            + Atau(:,i,3)*A3(:,3,j)
      &            + Atau(:,i,4)*A3(:,4,j)
      &            + Atau(:,i,5)*A3(:,5,j)
+     &            + Atau(:,i,6)*A3(:,6,j)
      &            )
           enddo
        enddo
@@ -585,8 +653,6 @@ c.... calculate (Atau) <-- (A_2 tau) (Recall that we are using a
 c                                     diagonal tau here)          
 c     
        if (itau.lt.10) then
-c
-c.... TODO: contributions to Atau
 c
           do i = 1, nflow
              Atau(:,i,1) = A2(:,i,1)*tau(:,1)
@@ -610,8 +676,6 @@ c
 c     
 c.... calculate (A_2 tau A_0) (for L.S. time term of EGmass)
 c
-c.... TODO: contributions to A2tauA0
-c
        do j = 1, nflow
           do i = 1, nflow
              A2tauA0(:,i,j) = 
@@ -619,22 +683,22 @@ c
      &            Atau(:,i,2)*A0(:,2,j) +
      &            Atau(:,i,3)*A0(:,3,j) +
      &            Atau(:,i,4)*A0(:,4,j) +
-     &            Atau(:,i,5)*A0(:,5,j)
+     &            Atau(:,i,5)*A0(:,5,j) +
+     &            Atau(:,i,6)*A0(:,6,j)
           enddo
        enddo
 c
 c.... add (A_2 tau A_1) to stiff [2,1]
 c
-c.... TODO: additions to stiff (why is it i+5?)
-c
        do j = 1, nflow
           do i = 1, nflow
-             stiff(:,i+5,j) = stiff(:,i+5,j) + (
+             stiff(:,i+6,j) = stiff(:,i+6,j) + (
      &              Atau(:,i,1)*A1(:,1,j)
      &            + Atau(:,i,2)*A1(:,2,j)
      &            + Atau(:,i,3)*A1(:,3,j)
      &            + Atau(:,i,4)*A1(:,4,j)
      &            + Atau(:,i,5)*A1(:,5,j)
+     &            + Atau(:,i,6)*A1(:,6,j)
      &            )
           enddo
        enddo
@@ -643,12 +707,13 @@ c.... add (A_2 tau A_2) to stiff [2,2]
 c
        do j = 1, nflow
           do i = 1, nflow
-             stiff(:,i+5,j+5) = stiff(:,i+5,j+5) + (
+             stiff(:,i+6,j+6) = stiff(:,i+6,j+6) + (
      &              Atau(:,i,1)*A2(:,1,j)
      &            + Atau(:,i,2)*A2(:,2,j)
      &            + Atau(:,i,3)*A2(:,3,j)
      &            + Atau(:,i,4)*A2(:,4,j)
      &            + Atau(:,i,5)*A2(:,5,j)
+     &            + Atau(:,i,6)*A2(:,6,j)
      &            )
           enddo
        enddo
@@ -657,12 +722,13 @@ c.... add (A_2 tau A_3) to stiff [2,3]
 c
        do j = 1, nflow
           do i = 1, nflow
-             stiff(:,i+5,j+10) = stiff(:,i+5,j+10) + (
+             stiff(:,i+6,j+12) = stiff(:,i+6,j+12) + (
      &              Atau(:,i,1)*A3(:,1,j)
      &            + Atau(:,i,2)*A3(:,2,j)
      &            + Atau(:,i,3)*A3(:,3,j)
      &            + Atau(:,i,4)*A3(:,4,j)
      &            + Atau(:,i,5)*A3(:,5,j)
+     &            + Atau(:,i,6)*A3(:,6,j)
      &            )
           enddo
        enddo
@@ -671,8 +737,6 @@ c.... calculate (Atau) <-- (A_3 tau) (Recall that we are using a
 c                                     diagonal tau here)          
 c     
        if (itau.lt.10) then
-c
-c.... TODO: attitions to Atau
 c          
           do i = 1, nflow
              Atau(:,i,1) = A3(:,i,1)*tau(:,1)
@@ -696,8 +760,6 @@ c
 c
 c.... calculate (A_3 tau A_0) (for L.S. time term of EGmass)
 c
-c.... TODO: additions to A3tauA0
-c
        do j = 1, nflow
           do i = 1, nflow
              A3tauA0(:,i,j) = 
@@ -705,22 +767,22 @@ c
      &            Atau(:,i,2)*A0(:,2,j) +
      &            Atau(:,i,3)*A0(:,3,j) +
      &            Atau(:,i,4)*A0(:,4,j) +
-     &            Atau(:,i,5)*A0(:,5,j)
+     &            Atau(:,i,5)*A0(:,5,j) +
+     &            Atau(:,i,6)*A0(:,6,j)
           enddo
        enddo
 c
 c.... add (A_3 tau A_1) to stiff [3,1]
 c
-c.... TODO: additions to stiff
-c
        do j = 1, nflow
           do i = 1, nflow
-             stiff(:,i+10,j) = stiff(:,i+10,j) + (
+             stiff(:,i+12,j) = stiff(:,i+12,j) + (
      &              Atau(:,i,1)*A1(:,1,j)
      &            + Atau(:,i,2)*A1(:,2,j)
      &            + Atau(:,i,3)*A1(:,3,j)
      &            + Atau(:,i,4)*A1(:,4,j)
      &            + Atau(:,i,5)*A1(:,5,j)
+     &            + Atau(:,i,6)*A1(:,6,j)
      &            )
           enddo
        enddo
@@ -729,12 +791,13 @@ c.... add (A_3 tau A_2) to stiff [3,2]
 c
        do j = 1, nflow
           do i = 1, nflow
-             stiff(:,i+10,j+5) = stiff(:,i+10,j+5) + (
+             stiff(:,i+12,j+6) = stiff(:,i+12,j+6) + (
      &              Atau(:,i,1)*A2(:,1,j)
      &            + Atau(:,i,2)*A2(:,2,j)
      &            + Atau(:,i,3)*A2(:,3,j)
      &            + Atau(:,i,4)*A2(:,4,j)
      &            + Atau(:,i,5)*A2(:,5,j)
+     &            + Atau(:,i,6)*A2(:,6,j)
      &            )
           enddo
        enddo
@@ -743,12 +806,13 @@ c.... add (A_3 tau A_3) to stiff [3,3]
 c
        do j = 1, nflow
           do i = 1, nflow
-             stiff(:,i+10,j+10) = stiff(:,i+10,j+10) + (
+             stiff(:,i+12,j+12) = stiff(:,i+12,j+12) + (
      &              Atau(:,i,1)*A3(:,1,j)
      &            + Atau(:,i,2)*A3(:,2,j)
      &            + Atau(:,i,3)*A3(:,3,j)
      &            + Atau(:,i,4)*A3(:,4,j)
      &            + Atau(:,i,5)*A3(:,5,j)
+     &            + Atau(:,i,6)*A3(:,6,j)
      &            )
           enddo
        enddo
@@ -784,8 +848,6 @@ c
 c
 c.... loop through d.o.f.'s
 c
-c.... TODO: additions to EGmass
-c
             do idof = 1, nflow
                il = i0 + idof
                
@@ -799,6 +861,8 @@ c
      &                             fact * Atau(:,idof,4)
                EGmass(:,il,j0+5) = EGmass(:,il,j0+5) +
      &                             fact * Atau(:,idof,5)
+               EGmass(:,il,j0+6) = EGmass(:,il,j0+6) +
+     &                             fact * Atau(:,idof,6)
             enddo
 c
 c.... end loop on column nodes
