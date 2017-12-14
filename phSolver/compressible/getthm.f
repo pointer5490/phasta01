@@ -380,7 +380,7 @@ c
 		alfap = one / T
 		betaT = one / pres
 c
-c.... TODO: confirm cp equation correct
+c.... TODO: should cp be a function of Tvib or T?
 c
 		cp    = yN2 * ( cps(1) + Rs(1) * Tvib(1)**2 * Texp1
      &                   / ( ( one - Texp1 ) * T )**2 )

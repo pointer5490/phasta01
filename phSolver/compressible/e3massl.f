@@ -49,6 +49,8 @@ c
 c
 c.... loop through d.o.f.'s
 c
+c.... TODO: expand EGmass
+c
               do jdof = 1, nflow
                  EGmass(:,i0+1,j0+jdof) = EGmass(:,i0+1,j0+jdof) 
      &                                  + fact(:,1) * A0(:,1,jdof)

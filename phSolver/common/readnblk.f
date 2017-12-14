@@ -160,9 +160,9 @@ c
       I3nsd  = nsd / 3          ! nsd=3 integer flag
       E3nsd  = float(I3nsd)     ! nsd=3 real    flag
       if(matflg(1,1).lt.0) then
-         nflow = nsd + 2
+         nflow = nsd + 1
       else
-         nflow = nsd + 3
+         nflow = nsd + 3	! incremented by one for augmented solution vector
       endif 
       ndof   = nsd + 2
       nsclr=impl(1)/100

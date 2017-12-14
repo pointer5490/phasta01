@@ -34,6 +34,8 @@ c
 c.... calculate the contribution in non-integrated by part form
 c.... add (N_b A_tilde_i N_b,i) to BDiagl
 c
+c.... TODO: make changes to BDiagl
+c
        do j = 1, nshl   ! May be worth eliminating zeros in A(prim) matrices
         tmp=shp(:,j)*WdetJ
             BDiagl(:,j,1,1) = BDiagl(:,j,1,1)

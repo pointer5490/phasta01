@@ -69,6 +69,8 @@ c.... add spatial contribution to rl and rml
 c
 c.... ires = 1 or 3
 c
+c.... TODO: make modifications to rl
+c
         if ((ires .eq. 1) .or. (ires .eq. 3)) then
 c
           do i = 1, nshl
