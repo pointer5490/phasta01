@@ -225,8 +225,6 @@ c
 c        
 c....  Discontinuity capturing
 c
-c.... TODO: LEFT OFF HERE W/ FINDING CHANGES....
-c
         if(iDC.ne.0) then
           call e3dc  (g1yi,          g2yi,          g3yi,
      &                A0,            raLS,          rTLS,

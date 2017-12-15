@@ -69,26 +69,28 @@ c.... add spatial contribution to rl and rml
 c
 c.... ires = 1 or 3
 c
-c.... TODO: make modifications to rl
-c
         if ((ires .eq. 1) .or. (ires .eq. 3)) then
 c
           do i = 1, nshl
             rl(:,i,1) = rl(:,i,1) + WdetJ * (
-     &                  shg(:,i,1) * ri(:, 1) + shg(:,i,2) * ri(:, 6)
-     &                                        + shg(:,i,3) * ri(:,11) )
-            rl(:,i,2) = rl(:,i,2) + WdetJ * (
-     &                  shg(:,i,1) * ri(:, 2) + shg(:,i,2) * ri(:, 7)
-     &                                        + shg(:,i,3) * ri(:,12) )
-            rl(:,i,3) = rl(:,i,3) + WdetJ * (
-     &                  shg(:,i,1) * ri(:, 3) + shg(:,i,2) * ri(:, 8)
+     &                  shg(:,i,1) * ri(:, 1) + shg(:,i,2) * ri(:, 7)
      &                                        + shg(:,i,3) * ri(:,13) )
-            rl(:,i,4) = rl(:,i,4) + WdetJ * (
-     &                  shg(:,i,1) * ri(:, 4) + shg(:,i,2) * ri(:, 9)
+            rl(:,i,2) = rl(:,i,2) + WdetJ * (
+     &                  shg(:,i,1) * ri(:, 2) + shg(:,i,2) * ri(:, 8)
      &                                        + shg(:,i,3) * ri(:,14) )
-            rl(:,i,5) = rl(:,i,5) + WdetJ * (
-     &                  shg(:,i,1) * ri(:, 5) + shg(:,i,2) * ri(:,10)
+            rl(:,i,3) = rl(:,i,3) + WdetJ * (
+     &                  shg(:,i,1) * ri(:, 3) + shg(:,i,2) * ri(:, 9)
      &                                        + shg(:,i,3) * ri(:,15) )
+            rl(:,i,4) = rl(:,i,4) + WdetJ * (
+     &                  shg(:,i,1) * ri(:, 4) + shg(:,i,2) * ri(:,10)
+     &                                        + shg(:,i,3) * ri(:,16) )
+            rl(:,i,5) = rl(:,i,5) + WdetJ * (
+     &                  shg(:,i,1) * ri(:, 5) + shg(:,i,2) * ri(:,11)
+     &                                        + shg(:,i,3) * ri(:,17) )
+            rl(:,i,6) = rl(:,i,6) + WdetJ * (
+     &                  shg(:,i,1) * ri(:, 6) + shg(:,i,2) * ri(:,12)
+     &                                        + shg(:,i,3) * ri(:,18) )
+            
           enddo
 c
 !      flops = flops + 36*nshl*npro
@@ -99,25 +101,29 @@ c
         if ((ires .eq. 2) .or. (ires .eq. 3)) then
           do i = 1, nshl
             rml(:,i,1) = rml(:,i,1) + WdetJ * (
-     &                   shg(:,i,1) * rmi(:, 1) + shg(:,i,2) * rmi(:, 6)
-     &                 + shg(:,i,3) * rmi(:,11) 
-     &                   + shp(:,i) * rmi(:,16)  )
+     &                   shg(:,i,1) * rmi(:, 1) + shg(:,i,2) * rmi(:, 7)
+     &                 + shg(:,i,3) * rmi(:,13) 
+     &                   + shp(:,i) * rmi(:,19)  )
             rml(:,i,2) = rml(:,i,2) + WdetJ * (
-     &                   shg(:,i,1) * rmi(:, 2) + shg(:,i,2) * rmi(:, 7)
-     &                 + shg(:,i,3) * rmi(:,12) 
-     &                   + shp(:,i) * rmi(:,17)    )
-            rml(:,i,3) = rml(:,i,3) + WdetJ * (
-     &                   shg(:,i,1) * rmi(:, 3) + shg(:,i,2) * rmi(:, 8)
-     &                 + shg(:,i,3) * rmi(:,13)
-     &                   + shp(:,i) * rmi(:,18)    )
-            rml(:,i,4) = rml(:,i,4) + WdetJ * (
-     &                   shg(:,i,1) * rmi(:, 4) + shg(:,i,2) * rmi(:, 9)
+     &                   shg(:,i,1) * rmi(:, 2) + shg(:,i,2) * rmi(:, 8)
      &                 + shg(:,i,3) * rmi(:,14) 
-     &                   + shp(:,i) * rmi(:,19)    )
-            rml(:,i,5) = rml(:,i,5) + WdetJ * (
-     &                   shg(:,i,1) * rmi(:, 5) + shg(:,i,2) * rmi(:,10)
-     &                 + shg(:,i,3) * rmi(:,15)
      &                   + shp(:,i) * rmi(:,20)    )
+            rml(:,i,3) = rml(:,i,3) + WdetJ * (
+     &                   shg(:,i,1) * rmi(:, 3) + shg(:,i,2) * rmi(:, 9)
+     &                 + shg(:,i,3) * rmi(:,15)
+     &                   + shp(:,i) * rmi(:,21)    )
+            rml(:,i,4) = rml(:,i,4) + WdetJ * (
+     &                   shg(:,i,1) * rmi(:, 4) + shg(:,i,2) * rmi(:,10)
+     &                 + shg(:,i,3) * rmi(:,16) 
+     &                   + shp(:,i) * rmi(:,22)    )
+            rml(:,i,5) = rml(:,i,5) + WdetJ * (
+     &                   shg(:,i,1) * rmi(:, 5) + shg(:,i,2) * rmi(:,11)
+     &                 + shg(:,i,3) * rmi(:,17)
+     &                   + shp(:,i) * rmi(:,23)    )
+            rml(:,i,6) = rml(:,i,6) + WdetJ * (
+     &                   shg(:,i,1) * rmi(:, 6) + shg(:,i,2) * rmi(:,12)
+     &                 + shg(:,i,3) * rmi(:,18)
+     &                   + shp(:,i) * rmi(:,24)    )
           enddo
 c
 !      flops = flops + (15+45*nshl)*npro
@@ -128,19 +134,21 @@ c
         if (ngauss .eq. 1 .and. nshl.eq.4) then !already ex. integ mass
          if(matflg(5,1).ge.1) then
           do i = 1, nshl
-            rl(:,i,2) = rl(:,i,2) + shp(:,i) * WdetJ * ri(:,17)
-            rl(:,i,3) = rl(:,i,3) + shp(:,i) * WdetJ * ri(:,18)
-            rl(:,i,4) = rl(:,i,4) + shp(:,i) * WdetJ * ri(:,19)
-            rl(:,i,5) = rl(:,i,5) + shp(:,i) * WdetJ * ri(:,20)
+            rl(:,i,2) = rl(:,i,2) + shp(:,i) * WdetJ * ri(:,20)
+            rl(:,i,3) = rl(:,i,3) + shp(:,i) * WdetJ * ri(:,21)
+            rl(:,i,4) = rl(:,i,4) + shp(:,i) * WdetJ * ri(:,22)
+            rl(:,i,5) = rl(:,i,5) + shp(:,i) * WdetJ * ri(:,23)
+            rl(:,i,6) = rl(:,i,6) + shp(:,i) * WdetJ * ri(:,24)
           enddo
          endif
        else   !check for a body force
           do i = 1, nshl
-            rl(:,i,1) = rl(:,i,1) + shp(:,i) * WdetJ * ri(:,16)  
-            rl(:,i,2) = rl(:,i,2) + shp(:,i) * WdetJ * ri(:,17)  
-            rl(:,i,3) = rl(:,i,3) + shp(:,i) * WdetJ * ri(:,18)  
-            rl(:,i,4) = rl(:,i,4) + shp(:,i) * WdetJ * ri(:,19)  
-            rl(:,i,5) = rl(:,i,5) + shp(:,i) * WdetJ * ri(:,20)  
+            rl(:,i,1) = rl(:,i,1) + shp(:,i) * WdetJ * ri(:,19)  
+            rl(:,i,2) = rl(:,i,2) + shp(:,i) * WdetJ * ri(:,20)  
+            rl(:,i,3) = rl(:,i,3) + shp(:,i) * WdetJ * ri(:,21)  
+            rl(:,i,4) = rl(:,i,4) + shp(:,i) * WdetJ * ri(:,22)  
+            rl(:,i,5) = rl(:,i,5) + shp(:,i) * WdetJ * ri(:,23)
+            rl(:,i,6) = rl(:,i,6) + shp(:,i) * WdetJ * ri(:,24)  
           enddo
  
 !      flops = flops + 11*nshl*npro
@@ -214,6 +222,10 @@ c
      &                  + shg(:,i,1) * stif1(:,5,jdof)
      &                  + shg(:,i,2) * stif2(:,5,jdof)
      &                  + shg(:,i,3) * stif3(:,5,jdof)
+                   EGmass(:,i0+6,j0+jdof) = EGmass(:,i0+6,j0+jdof) 
+     &                  + shg(:,i,1) * stif1(:,6,jdof)
+     &                  + shg(:,i,2) * stif2(:,6,jdof)
+     &                  + shg(:,i,3) * stif3(:,6,jdof)
                 enddo
 c
 c.... end loop on rows

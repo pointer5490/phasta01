@@ -37,7 +37,8 @@ c
      &            u1(npro),                  u2(npro),
      &            u3(npro),                  rmu(npro),
      &            rlm(npro),                 rlm2mu(npro),
-     &            con(npro),                 rho(npro)
+     &            con(npro),                 rho(npro),
+     &            convib(npro)
 c
         dimension qdi(npro,idflx),alph1(npro),alph2(npro)
 c
@@ -94,11 +95,9 @@ c
           
         idflow = 0
         if(idiff >= 1) then   !so taking care of all the idiff=1,2,3
-        idflow = idflow+12
+        idflow = idflow+15
 c
 c.... compute diffusive fluxes 
-c
-c.... TODO: modify 'qdi' (extend length), above change 12 to 15
 c
 c.... diffusive flux in x1-direction
 c
@@ -113,45 +112,44 @@ c
      &                                   +    rmu * u3 * g1yi(:,4)
      &               +    rmu * u2 * g2yi(:,2) + rlm * u1 * g2yi(:,3)
      &               +    rmu * u3 * g3yi(:,2) + rlm * u1 * g3yi(:,4)
-     &               +    con      * g1yi(:,5)
-
+     &               +    con      * g1yi(:,5) + convib   * g1yi(:,6)
+	qdi(:,5) =  convib      * g1yi(:,6)
 c
 c.... diffusive flux in x2-direction
 c
-        qdi(:,5) =       rmu * g1yi(:,3) 
+        qdi(:,6) =       rmu * g1yi(:,3) 
      &            +      rmu * g2yi(:,2)
-        qdi(:,6) =       rlm * g1yi(:,2)
+        qdi(:,7) =       rlm * g1yi(:,2)
      &            +   rlm2mu * g2yi(:,3)
      &            +      rlm * g3yi(:,4)
-        qdi(:,7) =       rmu * g2yi(:,4)
+        qdi(:,8) =       rmu * g2yi(:,4)
      &            +      rmu * g3yi(:,3)
-        qdi(:,8) =  rlm * u2 * g1yi(:,2) +    rmu * u1 * g1yi(:,3)
+        qdi(:,9) =  rlm * u2 * g1yi(:,2) +    rmu * u1 * g1yi(:,3)
      &            + rmu * u1 * g2yi(:,2) + rlm2mu * u2 * g2yi(:,3)
      &            + rmu * u3 * g2yi(:,4)
      &            + rmu * u3 * g3yi(:,3) +    rlm * u2 * g3yi(:,4)
-     &            +    con      * g2yi(:,5)
+     &            +    con      * g2yi(:,5) + convib   * g2yi(:,6)
+	qdi(:,10) = convib   * g2yi(:,6)
 c
 c.... diffusive flux in x3-direction
 c
-        qdi(:,9 ) =       rmu * g1yi(:,4)
+        qdi(:,11 ) =       rmu * g1yi(:,4)
      &            +      rmu * g3yi(:,2)
-        qdi(:,10) =       rmu * g2yi(:,4)
+        qdi(:,12) =       rmu * g2yi(:,4)
      &            +      rmu * g3yi(:,3)
-        qdi(:,11) =       rlm * g1yi(:,2)
+        qdi(:,13) =       rlm * g1yi(:,2)
      &            +      rlm * g2yi(:,3)
      &            +   rlm2mu * g3yi(:,4)
-        qdi(:,12) =     rlm * u3 * g1yi(:,2) + rmu * u1 * g1yi(:,4)
+        qdi(:,14) =     rlm * u3 * g1yi(:,2) + rmu * u1 * g1yi(:,4)
      &            +    rlm * u3 * g2yi(:,3) + rmu * u2 * g2yi(:,4)
      &            +    rmu * u1 * g3yi(:,2) + rmu * u2 * g3yi(:,3)
      &            + rlm2mu * u3 * g3yi(:,4)
-     &            +    con      * g3yi(:,5) 
-
+     &            +    con      * g3yi(:,5) + convib   * g3yi(:,6) 
+	qdi(:,15) = covib   * g3yi(:,6)
 c
 c
 c.... assemble contribution of qdi to ql,i.e., contribution to 
 c     each element node
-c
-c.... TODO: modify ql matrix
 c
         do i=1,nshl
            ql(:,i,1 ) = ql(:,i,1 )+ shape(:,i)*WdetJ*qdi(:,1 )
@@ -166,6 +164,9 @@ c
            ql(:,i,10) = ql(:,i,10)+ shape(:,i)*WdetJ*qdi(:,10)
            ql(:,i,11) = ql(:,i,11)+ shape(:,i)*WdetJ*qdi(:,11)
            ql(:,i,12) = ql(:,i,12)+ shape(:,i)*WdetJ*qdi(:,12)
+           ql(:,i,13) = ql(:,i,13)+ shape(:,i)*WdetJ*qdi(:,13)
+           ql(:,i,14) = ql(:,i,14)+ shape(:,i)*WdetJ*qdi(:,14)
+           ql(:,i,15) = ql(:,i,15)+ shape(:,i)*WdetJ*qdi(:,15)
         enddo
 c
 c.... compute and assemble the element contribution to the lumped
@@ -207,7 +208,7 @@ c
 c.... compute the global gradient of Yt-variables, assuming 6th entry as 
 c.... the phase indicator function 
 c
-c.... TODO: phase indicator fcn (6 to 7)
+c.... TODO: phase indicator fcn (6 to 7)?
 c
 c  Yt_{,x_i}=SUM_{a=1}^nshl (N_{a,x_i}(int) Yta)
 c

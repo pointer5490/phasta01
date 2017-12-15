@@ -160,13 +160,12 @@ c.... subtract div(q) from the least squares term
 c
       if ((idiff >= 1).and.(ires==3 .or. ires==1)) then
 c
-c.... TODO: need to verify divqi contribution to rLyi
-c
       if (isurf.eq.zero) then
          rLyi(:,2) = rLyi(:,2) - divqi(:,1)
          rLyi(:,3) = rLyi(:,3) - divqi(:,2)
          rLyi(:,4) = rLyi(:,4) - divqi(:,3)       
          rLyi(:,5) = rLyi(:,5) - divqi(:,4)
+         rLyi(:,6) = rLyi(:,6) - divqi(:,5)
       endif
       endif
 c

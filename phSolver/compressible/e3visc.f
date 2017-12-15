@@ -101,7 +101,7 @@ c
          stiff(:, 8, 3) = rmu
          stiff(:, 9, 2) = rlm
          stiff(:,11, 2) = rlm    * u2
-         stiff(:,11, 3) = rmu    * u1S
+         stiff(:,11, 3) = rmu    * u1
            
 c     
 c.... K22

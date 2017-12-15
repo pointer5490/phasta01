@@ -26,6 +26,7 @@ c  cp     (npro)                : specific heat at constant pressure
 c  u1     (npro)                : x1-velocity component
 c  u2     (npro)                : x2-velocity component
 c  u3     (npro)                : x3-velocity component
+c  Tv     (npro)                : vibrational temperature
 c
 c
 c Zdenek Johan, Summer 1990. (Modified from e2ivar.f)

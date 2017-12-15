@@ -416,24 +416,24 @@ c
             idflow = idflow + 4
             do n=1, nshl
 c
-c.... TODO: update divqi matrix
-c
                divqi(:,1) = divqi(:,1) + shg(:,n,1)*ql(:,n,1 ) 
-     &              + shg(:,n,2)*ql(:,n,5 )
-     &              + shg(:,n,3)*ql(:,n,9 )
-
-               divqi(:,2) = divqi(:,2) + shg(:,n,1)*ql(:,n,2 ) 
      &              + shg(:,n,2)*ql(:,n,6 )
-     &              + shg(:,n,3)*ql(:,n,10)
-
-               divqi(:,3) = divqi(:,3) + shg(:,n,1)*ql(:,n,3 ) 
-     &              + shg(:,n,2)*ql(:,n,7 )
      &              + shg(:,n,3)*ql(:,n,11)
 
-               divqi(:,4) = divqi(:,4) + shg(:,n,1)*ql(:,n,4 ) 
-     &              + shg(:,n,2)*ql(:,n,8 )
+               divqi(:,2) = divqi(:,2) + shg(:,n,1)*ql(:,n,2 ) 
+     &              + shg(:,n,2)*ql(:,n,7 )
      &              + shg(:,n,3)*ql(:,n,12)
 
+               divqi(:,3) = divqi(:,3) + shg(:,n,1)*ql(:,n,3 ) 
+     &              + shg(:,n,2)*ql(:,n,8 )
+     &              + shg(:,n,3)*ql(:,n,13)
+
+               divqi(:,4) = divqi(:,4) + shg(:,n,1)*ql(:,n,4 ) 
+     &              + shg(:,n,2)*ql(:,n,9 )
+     &              + shg(:,n,3)*ql(:,n,14)
+               divqi(:,5) = divqi(:,5) + shg(:,n,1)*ql(:,n,5 )
+     &              + shg(:,n,2)*ql(:,n,10)
+     &              + shg(:,n,3)*ql(:,n,15)
             enddo
          endif                  !end of idiff
 c     
