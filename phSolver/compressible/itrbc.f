@@ -33,6 +33,8 @@ c
         integer locmax(1),locmin(1)
 c
 c  limiting...ugly but sometimes the only way
+c
+c.... TODO: review file and determine changes
 c 
         limitcount=0
         do i=1,nflow

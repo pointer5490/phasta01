@@ -51,8 +51,8 @@ c
 c
 c.... compute the directional cosines (streamline direction)
 c
+c.... TODO: review file and determine changes required
 c
-
         where (u .ne. zero)
            fact       = one / u
            Rcs(:,1,1) = u1 * fact

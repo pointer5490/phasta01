@@ -56,7 +56,9 @@ c
      &            shpb(MAXTOP,maxsh,MAXQPT),
      &            shglb(MAXTOP,nsd,maxsh,MAXQPT) 
         real*8   almit, alfit, gamit
-
+c
+c.... TODO: determine if dimension of ybar needs to change
+c
         dimension ifath(numnp),    velbar(nfath,ndof),  nsons(nfath)
         real*8 rerr(nshg,10),ybar(nshg,ndof+8) ! 8 is for avg. of square as uu, vv, ww, pp, TT, uv, uw, and vw
         real*8, allocatable, dimension(:,:) :: vortG

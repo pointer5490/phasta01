@@ -92,7 +92,9 @@ c
 c
         dimension xmudum(npro,ngauss)
         integer   aa, b
-
+c
+c.... TODO: review file and determine required changes
+c
         ttim(40) = ttim(40) - secs(0.0)
 
 c

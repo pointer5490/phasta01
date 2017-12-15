@@ -98,7 +98,7 @@ c
 c
 c.... compute diffusive fluxes 
 c
-c.... TODO: modify 'qdi' (extend length)
+c.... TODO: modify 'qdi' (extend length), above change 12 to 15
 c
 c.... diffusive flux in x1-direction
 c

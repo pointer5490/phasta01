@@ -46,7 +46,8 @@ c   where 1 is a matrix with every element=1
 c
 c   note that the wght has 4/3 multiplier so 3/4*20=15
 c
-
+c.... TODO: review file and determine changes required
+c
         fact=WdetJ/(Qwt(lcsyst,intp)*15.0d0)
          fct1=almi/(gami*alfi)*Dtgl  ! factor for predictor (scalar)
         if(ires.ne.1) then

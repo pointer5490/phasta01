@@ -86,6 +86,8 @@ c.... ------------------->  integration variables  <--------------------
 c
 c.... compute the primitive variables at the integration point
 c
+c.... TODO: review file and determine changes required
+c
         pres = zero
         u1   = zero
         u2   = zero
