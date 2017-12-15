@@ -50,6 +50,8 @@ c
      &		  fact(npro),	 h2o2u(npro),   giju(npro,6),
      &            A0inv(npro,15),gijdu(npro,6)
 c
+c.... TODO: determine changes required to full file
+c
       call e3gijd( dxidx, gijd )
 c
 c  next form the diffusive length scale |u| h_1 = 2 ( ui (gijd)-1 uj)^{1/2}
