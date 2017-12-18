@@ -1,7 +1,7 @@
         subroutine getthm (pres,    T,     Sclr,    rk,   rho,
      &                     ei,      h,     s,       cv,  cp,
      &                     alfap,   betaT, gamb,    c ,  eitr,
-     &                     eiv,     eiqt,  Tv)
+     &                     eiv,     eiqt,  Tv,      cpint)
 c
 c-----------------------------------------------------------------------
 c
@@ -44,6 +44,7 @@ c  eitr   (npro)	: internal energy (translation and rotation)
 c  eiv    (npro)	: internal energy (vibration)
 c  eiqt   (npro)	: internal energy quantity
 c  Tv     (npro)        : vibrational temperature
+c  cpint  (npro)        : specific heat capacity associated with internal DOF (i.e. vibration)
 c
 c
 c Zdenek Johan,    Spring 1990.
@@ -64,7 +65,8 @@ c
      &            rsrhol(npro),              rsrhog(npro),
      &            tmpg(npro),                tmpl(npro),
      &            eitr(npro),                eiv(npro),
-     &            eiqt(npro),                Tv(npro)             
+     &            eiqt(npro),                Tv(npro), 
+     &            cpint(npro)             
 c
         dimension Texp1(npro),               Texp2(npro),
                   yRT1(npro),                yRT2(npro)
@@ -356,7 +358,7 @@ c
 c
 c.... define useful constants
 c
-		Texp1 = exp( Tvib(1)/Tv )
+		Texp1 = exp( Tvib(1)/Tv )	!NOTE: these will be redefined later
 		Texp2 = exp( Tvib(2)/Tv )
 		yRT1 = yN2*Rs(1)*Tvib(1)
 		yRT2 = yO2*Rs(2)*Tvib(2)
@@ -373,20 +375,24 @@ c
 		eiv = yRT1 / ( Texp1 - one )
     &               + yRT2 / ( Texp2 - one )
 c
-c.... define internal energy, enthalpy, alfaP, betaT, cp, gamb, c
+c.... redefine Texp1 and Texp2
+c
+		Texp1 = exp( Tvib(1)/T )
+		Texp2 = exp( Tvib(2)/T )
+c
+c.... define internal energy, enthalpy, alfaP, betaT, cpint, cp, gamb, c
 c
 		ei    = eitr + eiv
 		h     = ei + Rgas * T
 		alfap = one / T
 		betaT = one / pres
+
+		cpint = yN2 * ( Rs(1) * Tvib(1)**2 * Texp1
+     &                   / ( ( Texp1 - one ) * T )**2 )
+     &                + yO2 * ( Rs(2) * Tvib(2)**2 * Texp2
+     &                   / ( ( Texp2 - one ) * T )**2 )
 c
-c.... TODO: should cp be a function of Tvib or T?
-c
-		cp    = yN2 * ( cps(1) + Rs(1) * Tvib(1)**2 * Texp1
-     &                   / ( ( one - Texp1 ) * T )**2 )
-     &                + yO2 * ( cps(2) + Rs(2) * Tvib(2)**2 * Texp2
-     &                   / ( ( one - Texp2 ) * T )**2 )
-c
+		cp    = yN2 * (cps(1) + cps(2) ) + cpint
 		cv    = cp - Rgas
 		gamb  = Rgas / cv
 		c     = sqrt( cp * gamb * T )

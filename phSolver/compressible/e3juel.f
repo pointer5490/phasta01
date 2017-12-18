@@ -60,7 +60,9 @@ c
      &                 rk,           rho,          ei,
      &                 tmp,          tmp,          tmp,
      &                 tmp,          tmp,          tmp,
-     &                 tmp,          tmp)
+     &                 tmp,          tmp,          tmp,
+     &                 tmp,          tmp,          yl(:,inod,6),
+     &                 tmp)
 c
          yl(:,inod,1) = rho 
          yl(:,inod,2) = rho * yl(:,inod,2)

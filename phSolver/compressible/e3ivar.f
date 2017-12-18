@@ -56,6 +56,7 @@ c  eitr   (npro)                : internal energy (translation and rotation)
 c  eiv    (npro)                : internal energy (vibration)
 c  eiqt   (npro)                : internal energy constant
 c  Tv     (npro)                : vibrational temperature
+c  cpint  (npro)                : specific heat capacity associated with internal DOF (i.e. vibration)
 c  convib (npro)                : vibrational conductivity
 c
 c Zdenek Johan, Summer 1990. (Modified from e2ivar.f)
@@ -89,7 +90,8 @@ c
      &            rlm2mu(npro),              con(npro), 
      &            Sclr(npro),                eitr(npro),
      &            eiv(npro),                 eiqt(npro), 
-     &            Tv(npro),                  convib(npro)
+     &            Tv(npro),                  convib(npro),
+     &            cpint(npro)
 c
         dimension tmp(npro),  dxdxi(npro,nsd,nsd),  sgn(npro,nshl)
         dimension rlsl(npro,nshl,6),         rlsli(npro,6),
@@ -140,7 +142,8 @@ c
      &               tmp,        tmp,          tmp,
      &               tmp,        tmp,          tmp,
      &               tmp,        tmp,          tmp,
-     &               eiv,        tmp,          dui(:,6))
+     &               eiv,        tmp,          dui(:,6),
+     &               tmp)
 c     
 c
         dui(:,1) = rho
@@ -244,7 +247,8 @@ c
      &               h,               tmp,             cv,
      &               cp,              alfap,           betaT,
      &               tmp,             tmp,             eitr,
-     &               eiv,             eiqt,            Tv)
+     &               eiv,             eiqt,            Tv, 
+     &               cpint)
 c
         ttim(27) = ttim(27) + secs(0.0)
 c
@@ -252,7 +256,7 @@ c ........Get the material properties
 c
         call getDiff (T,        cp,       rho,        ycl, 
      &                rmu,      rlm,      rlm2mu,     con,  shape,
-     &                xmudmi,   xl,       convib)
+     &                xmudmi,   xl,       convib,     cpint)
 
 c.... --------------------->  Element Metrics  <-----------------------
 c

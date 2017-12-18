@@ -1,6 +1,6 @@
         subroutine getDiff (T,      cp,     rho,    ycl,
      &                      rmu,    rlm,    rlm2mu, con, shp,
-     &                      xmudmi, xl,     convib)
+     &                      xmudmi, xl,     convib, cpint)
 
 c----------------------------------------------------------------------
 c
@@ -9,6 +9,7 @@ c
 c input:
 c  T      (npro)          : temperature
 c  cp     (npro)          : specific heat at constant pressure
+c  cpint  (npro)          : specific heat associated with internal DOF (i.e. vibration)
 c **************************************************************
 c  rho    (npro)          : density
 c  ycl    (npro,nshl,ndof): Y variables 
@@ -20,6 +21,7 @@ c  rlm    (npro)        : Lambda
 c  rlm2mu (npro)        : Lambda + 2 Mu
 c  con    (npro)        : Conductivity
 c  convib (npro)        : vibrational conductivity
+c  
 c
 c Note: material type flags
 c         matflg(2):
@@ -56,8 +58,6 @@ c
             do n=1,nenl
                xx(:)=xx(:) + shp(:,n) * xl(:,n,1)
             enddo
-c
-c.... TODO: review to find changes to file (if any)
 c
 c.... constant viscosity
 c
@@ -172,9 +172,7 @@ c.... calculate the remaining quantities
 c
       con    = rmu * cp / pr
 
-c.... TODO: define convib in getdiff
-c           Use Euckens relations (see ref 7,18 of chalot '94
-
+      convib = rmu * cpint
 c
 c-------------Eddy Viscosity Calculation-----------------
 c

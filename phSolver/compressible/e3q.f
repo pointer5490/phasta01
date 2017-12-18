@@ -38,7 +38,8 @@ c
      &            u3(npro),                  rmu(npro),
      &            rlm(npro),                 rlm2mu(npro),
      &            con(npro),                 rho(npro),
-     &            convib(npro)
+     &            convib(npro),              Tv(npro),
+     &            cpint(npro)
 c
         dimension qdi(npro,idflx),alph1(npro),alph2(npro)
 c
@@ -82,7 +83,7 @@ c
      &                 g2yi,      g3yi,         shg,
      &                 dxidx,     WdetJ,        T,
      &                 cp,        u1,           u2,
-     &                 u3)              
+     &                 u3,        Tv,           cpint)              
 c
 c.... compute diffusive flux vector at this integration point
 c
@@ -91,7 +92,7 @@ c.... get material properties
 c
         call getDiff (T,        cp,       rho,        ycl,
      &                rmu,      rlm,      rlm2mu,     con,  shape,
-     &                xmudmi,   xl,       convib)
+     &                xmudmi,   xl,       convib,     cpint)
           
         idflow = 0
         if(idiff >= 1) then   !so taking care of all the idiff=1,2,3

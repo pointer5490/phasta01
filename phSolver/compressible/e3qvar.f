@@ -1,7 +1,8 @@
         subroutine e3qvar (ycl, shp,     shgl,    rho,
      &                     xl,  g1yi,    g2yi,    g3yi,
      &                     shg, dxidx,   WdetJ,   T, 
-     &                     cp,  u1,      u2,      u3)
+     &                     cp,  u1,      u2,      u3, 
+     &                     Tv,  cpint)
 c
 c----------------------------------------------------------------------
 c
@@ -27,7 +28,7 @@ c  u1     (npro)                : x1-velocity component
 c  u2     (npro)                : x2-velocity component
 c  u3     (npro)                : x3-velocity component
 c  Tv     (npro)                : vibrational temperature
-c
+c  cpint  (npro)                : specific heat capacity associated with internal DOF (i.e. vibration)
 c
 c Zdenek Johan, Summer 1990. (Modified from e2ivar.f)
 c Zdenek Johan, Winter 1991. (Fortran 90)
@@ -46,8 +47,8 @@ c
      &            dxidx(npro,nsd,nsd), WdetJ(npro),
      &            T(npro),             cp(npro),                  
      &            u1(npro),            u2(npro),
-     &            u3(npro),            pres(npro)k
-     &            Tv(npro)
+     &            u3(npro),            pres(npro),
+     &            Tv(npro),            cpint(npro)
 
 c
 c  local arrays
@@ -101,7 +102,8 @@ c
      &               tmp,             tmp,                tmp,
      &               cp,              tmp,                tmp,
      &               tmp,             tmp,                tmp,
-     &               tmp,             tmp,                Tv)
+     &               tmp,             tmp,                Tv,
+     &               cpint)
 c
 c.... --------------------->  Element Metrics  <-----------------------
 c

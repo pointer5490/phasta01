@@ -146,12 +146,17 @@ c
           npro = nshg
 c
           ithm = 2  ! get pressure from rho and T 
+c
+c.... TODO: verify function inputs correct
+c
 c...when ithm=2 scalar is not used so tmp is in place
           call getthm (y1,        y(:,5),      tmp,
      &                 rk,         q1,         tmp,
      &                 tmp,        tmp,        tmp,
      &                 tmp,        tmp,        tmp,
-     &                 tmp,        tmp)
+     &                 tmp,        tmp,        tmp,
+     &                 tmp,        tmp,        y(:,6),
+     &                 tmp)
 c
           where (btest(iBC,0))
             y(:,1) = y1

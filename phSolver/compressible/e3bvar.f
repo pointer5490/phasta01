@@ -120,7 +120,10 @@ c
 
         ithm = 6
         if (Navier .eq. 1) ithm = 7
-        call getthm (pres,            T,                  temp,
+c
+c.... TODO: expand getthm function input/output
+c        
+	call getthm (pres,            T,                  temp,
      &               rk,              rho,                ei,
      &               h,               tmp,                cv,
      &               cp,              alfap,              betaT,
